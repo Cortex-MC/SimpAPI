@@ -1,0 +1,4 @@
+name: SimpAPI
+version: ${project.version}
+main: me.kodysimpson.simpapi.SimpAPI
+api-version: 1.16
