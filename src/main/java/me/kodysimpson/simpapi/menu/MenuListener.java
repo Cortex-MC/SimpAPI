@@ -1,5 +1,7 @@
 package me.kodysimpson.simpapi.menu;
 
+import me.kodysimpson.simpapi.exceptions.MenuManagerException;
+import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -25,7 +27,13 @@ public class MenuListener implements Listener {
             // the menu we clicked on
             Menu menu = (Menu) holder;
             //Call the handleMenu object which takes the event and processes it
-            menu.handleMenu(e);
+            try{
+                menu.handleMenu(e);
+            } catch (MenuManagerNotSetupException menuManagerNotSetupException) {
+                System.out.println("THE MENU MANAGER HAS NOT BEEN CONFIGURED. CALL MENUMANAGER.SETUP()");
+            } catch (MenuManagerException menuManagerException) {
+                menuManagerException.printStackTrace();
+            }
         }
 
     }

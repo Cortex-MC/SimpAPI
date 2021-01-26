@@ -9,11 +9,11 @@ Companion class to all menus. This is needed to pass information across the enti
 
 import org.bukkit.entity.Player;
 
-public abstract class PlayerMenuUtility {
+public abstract class AbstractPlayerMenuUtility {
 
     private Player owner;
 
-    public PlayerMenuUtility(Player p) {
+    public AbstractPlayerMenuUtility(Player p) {
         this.owner = p;
     }
 

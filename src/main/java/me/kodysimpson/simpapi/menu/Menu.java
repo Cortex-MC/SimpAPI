@@ -1,5 +1,7 @@
 package me.kodysimpson.simpapi.menu;
 
+import me.kodysimpson.simpapi.exceptions.MenuManagerException;
+import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -16,15 +18,15 @@ import java.util.Arrays;
 public abstract class Menu implements InventoryHolder {
 
     //Protected values that can be accessed in the menus
-    protected PlayerMenuUtility playerMenuUtility;
+    protected AbstractPlayerMenuUtility pmu;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
 
     //Constructor for Menu. Pass in a PlayerMenuUtility so that
     // we have information on who's menu this is and
     // what info is to be transfered
-    public Menu(PlayerMenuUtility playerMenuUtility) {
-        this.playerMenuUtility = playerMenuUtility;
+    public Menu(AbstractPlayerMenuUtility pmu) {
+        this.pmu = pmu;
     }
 
     //let each menu decide their name
@@ -34,7 +36,7 @@ public abstract class Menu implements InventoryHolder {
     public abstract int getSlots();
 
     //let each menu decide how the items in the menu will be handled when clicked
-    public abstract void handleMenu(InventoryClickEvent e);
+    public abstract void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException;
 
     //let each menu decide what items are to be placed in the inventory menu
     public abstract void setMenuItems();
@@ -50,7 +52,7 @@ public abstract class Menu implements InventoryHolder {
         this.setMenuItems();
 
         //open the inventory for the player
-        playerMenuUtility.getOwner().openInventory(inventory);
+        pmu.getOwner().openInventory(inventory);
     }
 
     //Overridden method from the InventoryHolder interface
@@ -78,6 +80,10 @@ public abstract class Menu implements InventoryHolder {
         item.setItemMeta(itemMeta);
 
         return item;
+    }
+
+    public <T> T PMUCaster(AbstractPlayerMenuUtility abstractPlayerMenuUtility, Class<T> t) {
+        return t.cast(abstractPlayerMenuUtility);
     }
 
 }
