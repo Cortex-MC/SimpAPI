@@ -37,6 +37,8 @@ public class MenuManager {
      */
     public static void setup(Server server, Plugin plugin, Class<? extends AbstractPlayerMenuUtility> playerMenuUtilityClass) {
 
+        System.out.println("MENU MANAGER HAS BEEN SETUP");
+
         registerMenuListener(server, plugin);
         registerPlayerMenuUtility(playerMenuUtilityClass);
 
@@ -47,7 +49,8 @@ public class MenuManager {
     public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
 
         try {
-            menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player));
+            System.out.println("PICKLE JUICES PICKLE JUICES11111!!!!!");
+            menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MenuManagerException();
         }
@@ -57,7 +60,8 @@ public class MenuManager {
     public static void openMenu(Class<? extends Menu> menuClass, AbstractPlayerMenuUtility abstractPlayerMenuUtility) throws MenuManagerException, MenuManagerNotSetupException {
 
         try {
-            menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(abstractPlayerMenuUtility);
+            System.out.println("PICKLE JUICES PICKLE JUICES22222!!!!!");
+            menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(abstractPlayerMenuUtility).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MenuManagerException();
         }
