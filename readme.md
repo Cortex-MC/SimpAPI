@@ -1,7 +1,7 @@
 # SimpAPI v1.0
 ****
 SimpAPI, finally a good API that can make coding MC Plugins much easier and less painful.
-This API includes all of my primary utility like *Menu Manager*, *Command Manager*, *ColorTranslator*, and more.
+This API includes all of my primary utilities like *Menu Manager*, *Command Manager*, *ColorTranslator*, and more.
 
 Video Showcase and Tutorial: *coming soon*
 
@@ -25,4 +25,4 @@ Maven Dependency:
 </dependency>
 ```
 
-##Usage
+## Usage
