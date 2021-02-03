@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a main command that has subcommands within it. Like /stafftools freeze is /[corecommand] [subcommand]
+ */
 class CoreCommand extends Command {
 
     private ArrayList<SubCommand> subcommands;

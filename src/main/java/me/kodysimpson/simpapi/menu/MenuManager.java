@@ -10,6 +10,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
+/**
+ * Used to interface with the Menu Manager API
+ */
 public class MenuManager {
 
     //each player will be assigned their own PlayerMenuUtility object
@@ -96,7 +99,7 @@ public class MenuManager {
     public static <T> T getPlayerMenuUtility(Player p, Class<T> t) throws MenuManagerException {
 
         AbstractPlayerMenuUtility playerMenuUtility;
-        if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a lockmenusystem "saved" for them
+        if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a PMU "saved" for them
 
             try{
                 //Construct PMU using reflection
