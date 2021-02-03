@@ -49,7 +49,6 @@ public class MenuManager {
     public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
 
         try {
-            System.out.println("PICKLE JUICES PICKLE JUICES11111!!!!!");
             menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MenuManagerException();
@@ -60,7 +59,6 @@ public class MenuManager {
     public static void openMenu(Class<? extends Menu> menuClass, AbstractPlayerMenuUtility abstractPlayerMenuUtility) throws MenuManagerException, MenuManagerNotSetupException {
 
         try {
-            System.out.println("PICKLE JUICES PICKLE JUICES22222!!!!!");
             menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(abstractPlayerMenuUtility).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MenuManagerException();

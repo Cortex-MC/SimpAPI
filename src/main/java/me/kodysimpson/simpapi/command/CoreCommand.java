@@ -2,24 +2,27 @@ package me.kodysimpson.simpapi.command;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class CoreCommand implements TabExecutor {
+class CoreCommand extends Command {
 
     private ArrayList<SubCommand> subcommands;
 
-    public CoreCommand(ArrayList<SubCommand> subCommands){
+    public CoreCommand(String name, String description, String usageMessage, List<String> aliases, ArrayList<SubCommand> subCommands){
+        super(name, description, usageMessage, aliases);
         //Get the subcommands so we can access them in the command manager class(here)
         this.subcommands = subCommands;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public ArrayList<SubCommand> getSubCommands(){
+        return subcommands;
+    }
 
+    @Override
+    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 
         if (sender instanceof Player){
             Player p = (Player) sender;
@@ -34,17 +37,11 @@ class CoreCommand implements TabExecutor {
 
         }
 
-
         return true;
     }
 
-    public ArrayList<SubCommand> getSubCommands(){
-        return subcommands;
-    }
-
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-
+    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
         if (args.length == 1){ //prank <subcommand> <args>
             ArrayList<String> subcommandsArguments = new ArrayList<>();
 
@@ -60,8 +57,8 @@ class CoreCommand implements TabExecutor {
                 }
             }
         }
-
         return null;
     }
+
 
 }
