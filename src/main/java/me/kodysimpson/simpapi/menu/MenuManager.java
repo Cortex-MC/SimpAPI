@@ -4,10 +4,15 @@ import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredListener;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -23,7 +28,29 @@ public class MenuManager {
 
     private static void registerMenuListener(Server server, Plugin plugin) {
 
-        server.getPluginManager().registerEvents(new MenuListener(), plugin);
+        boolean isAlreadyRegistered = false;
+        for (RegisteredListener rl : InventoryClickEvent.getHandlerList().getRegisteredListeners()) {
+            System.out.println(rl.getListener().getClass().getSimpleName());
+            if (rl.getListener() instanceof MenuListener){
+                isAlreadyRegistered = true;
+                break;
+            }
+        }
+
+
+//        HandlerList.getHandlerLists().stream()
+//                .forEach(handler -> {
+//
+//
+//
+//                    System.out.println(handler.toString());
+////                    System.out.println(Modifier.toString(field.getModifiers()) + " " + field.getName());
+//                });
+
+        System.out.println("erwiwjriwer: " + isAlreadyRegistered);
+        if (!isAlreadyRegistered){
+            server.getPluginManager().registerEvents(new MenuListener(), plugin);
+        }
 
     }
 

@@ -24,6 +24,7 @@ class CoreCommand extends Command {
         return subcommands;
     }
 
+    // /weener
     @Override
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 
