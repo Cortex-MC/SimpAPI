@@ -36,6 +36,12 @@ class CoreCommand extends Command {
                         getSubCommands().get(i).perform(p, args);
                     }
                 }
+            }else {
+                p.sendMessage("--------------------------------");
+                for (int i = 0; i < subcommands.size(); i++){
+                    p.sendMessage(subcommands.get(i).getSyntax() + " - " + subcommands.get(i).getDescription());
+                }
+                p.sendMessage("--------------------------------");
             }
 
         }

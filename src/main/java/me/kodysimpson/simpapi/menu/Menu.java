@@ -35,6 +35,8 @@ public abstract class Menu implements InventoryHolder {
     //let each menu decide their slot amount
     public abstract int getSlots();
 
+    public abstract boolean cancelAllClicks();
+
     //let each menu decide how the items in the menu will be handled when clicked
     public abstract void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException;
 
