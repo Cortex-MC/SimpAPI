@@ -5,6 +5,8 @@ This API includes all of my primary utilities like *Menu Manager*, *Command Mana
 
 Video Showcase and Tutorial: *coming soon*
 
+JavaDocs: https://kodysimpson.github.io/SimpAPI/index.html
+
 ## Installation
 
 Maven Repository:
