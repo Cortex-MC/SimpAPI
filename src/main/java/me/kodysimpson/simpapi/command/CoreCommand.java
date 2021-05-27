@@ -13,11 +13,13 @@ import java.util.List;
 class CoreCommand extends Command {
 
     private ArrayList<SubCommand> subcommands;
+    private CommandList commandList;
 
-    public CoreCommand(String name, String description, String usageMessage, List<String> aliases, ArrayList<SubCommand> subCommands){
+    public CoreCommand(String name, String description, String usageMessage, CommandList commandList, List<String> aliases, ArrayList<SubCommand> subCommands){
         super(name, description, usageMessage, aliases);
         //Get the subcommands so we can access them in the command manager class(here)
         this.subcommands = subCommands;
+        this.commandList = commandList;
     }
 
     public ArrayList<SubCommand> getSubCommands(){
@@ -38,11 +40,33 @@ class CoreCommand extends Command {
                     }
                 }
             }else {
-                p.sendMessage("--------------------------------");
-                for (int i = 0; i < subcommands.size(); i++){
-                    p.sendMessage(subcommands.get(i).getSyntax() + " - " + subcommands.get(i).getDescription());
+                if (commandList == null){
+                    p.sendMessage("--------------------------------");
+                    for (SubCommand subcommand : subcommands) {
+                        p.sendMessage(subcommand.getSyntax() + " - " + subcommand.getDescription());
+                    }
+                    p.sendMessage("--------------------------------");
+                }else{
+                    if (commandList.topBorder() == null){
+                        p.sendMessage("--------------------------------");
+                    }else{
+                        p.sendMessage(commandList.topBorder());
+                    }
+                    if (commandList.listing("bob", "jenkins") == null){
+                        for (SubCommand subcommand : subcommands) {
+                            p.sendMessage(subcommand.getSyntax() + " - " + subcommand.getDescription());
+                        }
+                    }else{
+                        for (SubCommand subcommand : subcommands) {
+                            p.sendMessage(commandList.listing(subcommand.getSyntax(), subcommand.getDescription()));
+                        }
+                    }
+                    if (commandList.bottomBorder() == null){
+                        p.sendMessage("--------------------------------");
+                    }else{
+                        p.sendMessage(commandList.bottomBorder());
+                    }
                 }
-                p.sendMessage("--------------------------------");
             }
 
         }

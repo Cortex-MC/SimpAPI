@@ -25,6 +25,7 @@ public class CommandManager {
     public static void createCoreCommand(JavaPlugin plugin, String commandName,
                                          String commandDescription,
                                          String commandUsage,
+                                         CommandList commandList,
                                          List<String> aliases,
                                          Class<? extends SubCommand>... subcommands) throws NoSuchFieldException, IllegalAccessException {
 
@@ -44,7 +45,7 @@ public class CommandManager {
         Field commandField = plugin.getServer().getClass().getDeclaredField("commandMap");
         commandField.setAccessible(true);
         CommandMap commandMap = (CommandMap) commandField.get(plugin.getServer());
-        commandMap.register(commandName, new CoreCommand(commandName, commandDescription, commandUsage, aliases, commands));
+        commandMap.register(commandName, new CoreCommand(commandName, commandDescription, commandUsage, commandList, aliases, commands));
     }
 
 
@@ -60,6 +61,7 @@ public class CommandManager {
     public static void createCoreCommand(JavaPlugin plugin, String commandName,
                                          String commandDescription,
                                          String commandUsage,
+                                         CommandList commandList,
                                          Class<? extends SubCommand>... subcommands) throws NoSuchFieldException, IllegalAccessException {
 
         ArrayList<SubCommand> commands = new ArrayList<>();
@@ -78,7 +80,7 @@ public class CommandManager {
         Field commandField = plugin.getServer().getClass().getDeclaredField("commandMap");
         commandField.setAccessible(true);
         CommandMap commandMap = (CommandMap) commandField.get(plugin.getServer());
-        commandMap.register(commandName, new CoreCommand(commandName, commandDescription, commandUsage, Arrays.asList(""), commands));
+        commandMap.register(commandName, new CoreCommand(commandName, commandDescription, commandUsage, commandList, Arrays.asList(""), commands));
     }
 
 }
