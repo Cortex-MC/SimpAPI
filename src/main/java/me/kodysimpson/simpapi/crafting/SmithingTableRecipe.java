@@ -15,13 +15,11 @@ public class SmithingTableRecipe extends Recipe {
     @Override
     public String getType() { return "SmithingTable"; }
 
-    private Material input;
     private ItemStack base;
     private ItemStack addition;
 
-    public SmithingTableRecipe(ItemStack result, Material input, ItemStack base, ItemStack addition) {
+    public SmithingTableRecipe(ItemStack result, ItemStack base, ItemStack addition) {
         this.result = result;
-        this.input = input;
         this.base = base;
         this.addition = addition;
     }
