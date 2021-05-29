@@ -12,8 +12,10 @@ public abstract class SubCommand {
 
     public abstract String getSyntax();
 
+    // Change to Java style array declaration?
     public abstract void perform(Player player, String args[]);
 
+    // Change to Java style array declaration?
     public abstract List<String> getSubcommandArguments(Player player, String args[]);
 
 }
