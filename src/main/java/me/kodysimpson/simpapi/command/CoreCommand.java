@@ -47,7 +47,7 @@ class CoreCommand extends Command {
                     }
                     p.sendMessage("--------------------------------");
                 }else{
-                    commandList.displayCommandList(subcommands);
+                    commandList.displayCommandList(p, subcommands);
                 }
             }
 
