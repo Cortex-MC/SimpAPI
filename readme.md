@@ -9,7 +9,9 @@ JavaDocs: https://kodysimpson.github.io/SimpAPI/index.html
 
 ## Installation
 
-Maven Repository:
+### Maven
+
+#### Repository
 ```xml
 <repositories>
     <repository>
@@ -18,7 +20,7 @@ Maven Repository:
     </repository>
 </repositories>
 ```
-Maven Dependency:
+#### Dependency
 ```xml
 <dependency>
     <groupId>com.github.KodySimpson</groupId>
@@ -27,9 +29,42 @@ Maven Dependency:
 </dependency>
 ```
 
+### Gradle
+
+#### Repository
+
+Groovy:
+```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+```
+
+Kotlin:
+```kotlin
+repositories {
+    maven { url = uri("https://jitpack.io") }
+}
+```
+#### Dependency
+
+Groovy:
+```groovy
+dependencies {
+    implementation 'com.github.KodySimpson:SimpAPI:1.3'
+}
+```
+
+Kotlin:
+```kotlin
+dependencies {
+    implementation("com.github.KodySimpson:SimpAPI:1.3")
+}
+```
+
 ## Usage
 
-###ColorTranslator - Hexadecimal Color Usage
+### ColorTranslator - Hexadecimal Color Usage
 ****
 To produce MC text with hexadecimal colors in it, use the translateColorCodes() method from the ColorTranslator class.
 
@@ -43,7 +78,7 @@ As you can see, all you need to do is provide the color code after an & as you w
 There is also a method for TextComponents called translateColorCodesToTextComponent() which works the same.
 
 
-###Menu Manager
+### Menu Manager
 ****
 The Menu Manager is something I came up with a while ago and showed on my Youtube channel, but in the SimpAPI it is much more advanced and has been made much easier for the developers who use it.
 
