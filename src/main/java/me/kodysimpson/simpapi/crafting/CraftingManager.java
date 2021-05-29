@@ -11,7 +11,7 @@ public class CraftingManager {
     private CraftingManager() {}
 
     /**
-     * Creates a recipe
+     * Creates a Bukkit recipe
      * @param recipe Recipe instance
      * @param id Recipe ID
      * @throws CraftingTypeNotFound Gets thrown when the crafting type provided is not recognized
