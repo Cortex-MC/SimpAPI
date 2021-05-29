@@ -24,7 +24,7 @@ public abstract class Menu implements InventoryHolder {
 
     //Constructor for Menu. Pass in a PlayerMenuUtility so that
     // we have information on who's menu this is and
-    // what info is to be transfered
+    // what info is to be transferred
     public Menu(AbstractPlayerMenuUtility pmu) {
         this.pmu = pmu;
     }
@@ -76,6 +76,7 @@ public abstract class Menu implements InventoryHolder {
 
         ItemStack item = new ItemStack(material);
         ItemMeta itemMeta = item.getItemMeta();
+        assert itemMeta != null;
         itemMeta.setDisplayName(displayName);
 
         itemMeta.setLore(Arrays.asList(lore));
