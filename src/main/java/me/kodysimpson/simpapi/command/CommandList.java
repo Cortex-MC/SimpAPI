@@ -1,11 +1,13 @@
 package me.kodysimpson.simpapi.command;
 
-public abstract class CommandList {
+import java.util.List;
 
-    public abstract String topBorder();
+@FunctionalInterface
+public interface CommandList {
 
-    public abstract String bottomBorder();
-
-    public abstract String listing(String command, String commandDescription);
+    /**
+     * @param subCommandList A list of all the subcommands you can display
+     */
+    void displayCommandList(List<SubCommand> subCommandList);
 
 }

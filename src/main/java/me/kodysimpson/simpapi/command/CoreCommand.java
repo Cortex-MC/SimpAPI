@@ -47,25 +47,7 @@ class CoreCommand extends Command {
                     }
                     p.sendMessage("--------------------------------");
                 }else{
-                    if (commandList.topBorder() == null){
-                        p.sendMessage("--------------------------------");
-                    }else{
-                        p.sendMessage(commandList.topBorder());
-                    }
-                    if (commandList.listing("bob", "jenkins") == null){
-                        for (SubCommand subcommand : subcommands) {
-                            p.sendMessage(subcommand.getSyntax() + " - " + subcommand.getDescription());
-                        }
-                    }else{
-                        for (SubCommand subcommand : subcommands) {
-                            p.sendMessage(commandList.listing(subcommand.getSyntax(), subcommand.getDescription()));
-                        }
-                    }
-                    if (commandList.bottomBorder() == null){
-                        p.sendMessage("--------------------------------");
-                    }else{
-                        p.sendMessage(commandList.bottomBorder());
-                    }
+                    commandList.displayCommandList(subcommands);
                 }
             }
 
