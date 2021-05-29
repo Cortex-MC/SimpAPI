@@ -1,6 +1,5 @@
 package me.kodysimpson.simpapi.crafting;
 
-import com.google.common.collect.Maps;
 import me.kodysimpson.simpapi.SimpAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
