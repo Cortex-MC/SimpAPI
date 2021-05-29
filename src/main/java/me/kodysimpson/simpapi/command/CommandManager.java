@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CommandManager {
@@ -63,24 +64,7 @@ public class CommandManager {
                                          String commandUsage,
                                          CommandList commandList,
                                          Class<? extends SubCommand>... subcommands) throws NoSuchFieldException, IllegalAccessException {
-
-        ArrayList<SubCommand> commands = new ArrayList<>();
-
-        Arrays.stream(subcommands).map(subcommand -> {
-            try{
-                Constructor constructor = subcommand.getConstructor();
-                return constructor.newInstance();
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }).forEach(o -> commands.add((SubCommand) o));
-
-        //THANK YOU OZZYMAR <3 YOUR THE HOMIE
-        Field commandField = plugin.getServer().getClass().getDeclaredField("commandMap");
-        commandField.setAccessible(true);
-        CommandMap commandMap = (CommandMap) commandField.get(plugin.getServer());
-        commandMap.register(commandName, new CoreCommand(commandName, commandDescription, commandUsage, commandList, Arrays.asList(""), commands));
+        createCoreCommand(plugin, commandName, commandDescription, commandUsage, commandList, Collections.singletonList(""), subcommands);
     }
 
 }
