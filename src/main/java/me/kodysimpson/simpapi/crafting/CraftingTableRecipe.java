@@ -74,4 +74,26 @@ public class CraftingTableRecipe extends Recipe {
     public List<Material> getItems() {
         return new ArrayList<>(items);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CraftingTableRecipe that = (CraftingTableRecipe) o;
+        return items.equals(that.items) && itemMappings.equals(that.itemMappings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), items, itemMappings);
+    }
+
+    @Override
+    public String toString() {
+        return "CraftingTableRecipe{" +
+                "items=" + items +
+                ", itemMappings=" + itemMappings +
+                "} " + super.toString();
+    }
 }

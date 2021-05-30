@@ -8,6 +8,8 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.SmokingRecipe;
 
+import java.util.Objects;
+
 /**
  * Recipe for a Smithing Table
  */
@@ -33,5 +35,35 @@ public class SmithingTableRecipe extends Recipe {
         NamespacedKey key = new NamespacedKey(SimpAPI.getInstance(), id);
 
         return new SmithingRecipe(key, result, new RecipeChoice.ExactChoice(base), new RecipeChoice.ExactChoice(addition));
+    }
+
+    public ItemStack getBase() {
+        return base;
+    }
+
+    public ItemStack getAddition() {
+        return addition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SmithingTableRecipe that = (SmithingTableRecipe) o;
+        return base.equals(that.base) && addition.equals(that.addition);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), base, addition);
+    }
+
+    @Override
+    public String toString() {
+        return "SmithingTableRecipe{" +
+                "base=" + base +
+                ", addition=" + addition +
+                "} " + super.toString();
     }
 }
