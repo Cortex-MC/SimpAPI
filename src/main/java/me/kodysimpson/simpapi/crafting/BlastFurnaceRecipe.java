@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.BlastingRecipe;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -14,13 +15,15 @@ import java.util.Objects;
  */
 public class BlastFurnaceRecipe extends Recipe {
     @Override
+    @NotNull
     public String getType() { return "BlastFurnace"; }
 
+    @NotNull
     private final Material input;
     private final float experience;
     private final int cookingTime;
 
-    public BlastFurnaceRecipe(ItemStack result, Material input, float experience, int cookingTime) {
+    public BlastFurnaceRecipe(@NotNull ItemStack result, @NotNull Material input, float experience, int cookingTime) {
         this.result = result;
         this.input = input;
         this.experience = experience;
@@ -32,12 +35,14 @@ public class BlastFurnaceRecipe extends Recipe {
      * @param id Recipe ID
      * @return Bukkit recipe
      */
-    public BlastingRecipe getRecipe(String id) {
+    @NotNull
+    public BlastingRecipe getRecipe(@NotNull String id) {
         NamespacedKey key = new NamespacedKey(SimpAPI.getInstance(), id);
 
         return new BlastingRecipe(key, result, input, experience, cookingTime);
     }
 
+    @NotNull
     public Material getInput() {
         return input;
     }
@@ -64,6 +69,7 @@ public class BlastFurnaceRecipe extends Recipe {
     }
 
     @Override
+    @NotNull
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("input", input)

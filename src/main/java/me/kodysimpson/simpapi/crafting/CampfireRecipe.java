@@ -5,6 +5,7 @@ import me.kodysimpson.simpapi.SimpAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -13,13 +14,15 @@ import java.util.Objects;
  */
 public class CampfireRecipe extends Recipe {
     @Override
+    @NotNull
     public String getType() { return "Campfire"; }
 
+    @NotNull
     private final Material input;
     private final float experience;
     private final int cookingTime;
 
-    public CampfireRecipe(ItemStack result, Material input, float experience, int cookingTime) {
+    public CampfireRecipe(@NotNull ItemStack result, @NotNull Material input, float experience, int cookingTime) {
         this.result = result;
         this.input = input;
         this.experience = experience;
@@ -31,12 +34,13 @@ public class CampfireRecipe extends Recipe {
      * @param id Recipe ID
      * @return Bukkit recipe
      */
-    public org.bukkit.inventory.CampfireRecipe getRecipe(String id) {
+    public org.bukkit.inventory.CampfireRecipe getRecipe(@NotNull String id) {
         NamespacedKey key = new NamespacedKey(SimpAPI.getInstance(), id);
 
         return new org.bukkit.inventory.CampfireRecipe(key, result, input, experience, cookingTime);
     }
 
+    @NotNull
     public Material getInput() {
         return input;
     }
@@ -64,6 +68,7 @@ public class CampfireRecipe extends Recipe {
     }
 
     @Override
+    @NotNull
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("input", input)

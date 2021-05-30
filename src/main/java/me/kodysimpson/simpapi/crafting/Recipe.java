@@ -1,14 +1,23 @@
 package me.kodysimpson.simpapi.crafting;
 
 import com.google.common.base.MoreObjects;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public abstract class Recipe {
+    @NotNull
     protected ItemStack result;
 
+    protected Recipe() {
+        result = new ItemStack(Material.AIR);
+    }
+
+    @NotNull
     public ItemStack getResult() { return result.clone(); }
+    @NotNull
     abstract public String getType();
 
     @Override
@@ -25,6 +34,7 @@ public abstract class Recipe {
     }
 
     @Override
+    @NotNull
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("result", result)

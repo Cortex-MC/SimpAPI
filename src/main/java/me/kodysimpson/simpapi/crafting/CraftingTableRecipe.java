@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -14,13 +15,16 @@ import java.util.*;
  */
 public class CraftingTableRecipe extends Recipe {
     @Override
+    @NotNull
     public String getType() { return "CraftingTable"; }
 
+    @NotNull
     private final List<Material> items;
 
+    @NotNull
     private final Map<Material, Character> itemMappings = new HashMap<>();
 
-    public CraftingTableRecipe(ItemStack result, Material... items) {
+    public CraftingTableRecipe(@NotNull ItemStack result, @NotNull Material... items) {
         this.result = result;
         this.items = Arrays.asList(items);
         int index = 0;
@@ -36,7 +40,8 @@ public class CraftingTableRecipe extends Recipe {
      * @param id Recipe ID
      * @return Bukkit recipe
      */
-    public ShapedRecipe getRecipe(String id) {
+    @NotNull
+    public ShapedRecipe getRecipe(@NotNull String id) {
         NamespacedKey key = new NamespacedKey(SimpAPI.getInstance(), id);
 
         ShapedRecipe recipe = new ShapedRecipe(key, result);
@@ -72,6 +77,7 @@ public class CraftingTableRecipe extends Recipe {
         return recipe;
     }
 
+    @NotNull
     public List<Material> getItems() {
         return new ArrayList<>(items);
     }
@@ -91,6 +97,7 @@ public class CraftingTableRecipe extends Recipe {
     }
 
     @Override
+    @NotNull
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("items", items)

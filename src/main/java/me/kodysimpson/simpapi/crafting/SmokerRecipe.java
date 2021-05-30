@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.SmokingRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -14,13 +15,15 @@ import java.util.Objects;
  */
 public class SmokerRecipe extends Recipe {
     @Override
+    @NotNull
     public String getType() { return "Smoker"; }
 
+    @NotNull
     private final Material input;
     private final float experience;
     private final int cookingTime;
 
-    public SmokerRecipe(ItemStack result, Material input, float experience, int cookingTime) {
+    public SmokerRecipe(@NotNull ItemStack result, @NotNull Material input, float experience, int cookingTime) {
         this.result = result;
         this.input = input;
         this.experience = experience;
@@ -32,12 +35,14 @@ public class SmokerRecipe extends Recipe {
      * @param id Recipe ID
      * @return Bukkit recipe
      */
-    public SmokingRecipe getRecipe(String id) {
+    @NotNull
+    public SmokingRecipe getRecipe(@NotNull String id) {
         NamespacedKey key = new NamespacedKey(SimpAPI.getInstance(), id);
 
         return new SmokingRecipe(key, result, input, experience, cookingTime);
     }
 
+    @NotNull
     public Material getInput() {
         return input;
     }
@@ -65,6 +70,7 @@ public class SmokerRecipe extends Recipe {
     }
 
     @Override
+    @NotNull
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("input", input)

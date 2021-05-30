@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.SmokingRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -16,12 +17,15 @@ import java.util.Objects;
  */
 public class SmithingTableRecipe extends Recipe {
     @Override
+    @NotNull
     public String getType() { return "SmithingTable"; }
 
+    @NotNull
     private final ItemStack base;
+    @NotNull
     private final ItemStack addition;
 
-    public SmithingTableRecipe(ItemStack result, ItemStack base, ItemStack addition) {
+    public SmithingTableRecipe(@NotNull ItemStack result, @NotNull ItemStack base, @NotNull ItemStack addition) {
         this.result = result;
         this.base = base;
         this.addition = addition;
@@ -32,16 +36,19 @@ public class SmithingTableRecipe extends Recipe {
      * @param id Recipe ID
      * @return Bukkit recipe
      */
-    public SmithingRecipe getRecipe(String id) {
+    @NotNull
+    public SmithingRecipe getRecipe(@NotNull String id) {
         NamespacedKey key = new NamespacedKey(SimpAPI.getInstance(), id);
 
         return new SmithingRecipe(key, result, new RecipeChoice.ExactChoice(base), new RecipeChoice.ExactChoice(addition));
     }
 
+    @NotNull
     public ItemStack getBase() {
         return base;
     }
 
+    @NotNull
     public ItemStack getAddition() {
         return addition;
     }
@@ -61,6 +68,7 @@ public class SmithingTableRecipe extends Recipe {
     }
 
     @Override
+    @NotNull
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("base", base)

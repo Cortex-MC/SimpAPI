@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.StonecuttingRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -16,11 +17,12 @@ import java.util.Objects;
  */
 public class StonecutterRecipe extends Recipe {
     @Override
-    public String getType() { return "Stonecutter"; }
+    public @NotNull String getType() { return "Stonecutter"; }
 
+    @NotNull
     private final Material input;
 
-    public StonecutterRecipe(ItemStack result, Material input, ItemStack base, ItemStack addition) {
+    public StonecutterRecipe(@NotNull ItemStack result, @NotNull Material input, @NotNull ItemStack base, @NotNull ItemStack addition) {
         this.result = result;
         this.input = input;
     }
@@ -36,6 +38,7 @@ public class StonecutterRecipe extends Recipe {
         return new StonecuttingRecipe(key, result, input);
     }
 
+    @NotNull
     public Material getInput() {
         return input;
     }
@@ -55,7 +58,7 @@ public class StonecutterRecipe extends Recipe {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("input", input)
                 .toString();
