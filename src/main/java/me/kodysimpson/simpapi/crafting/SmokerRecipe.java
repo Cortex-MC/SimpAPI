@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.crafting;
 
+import com.google.common.base.MoreObjects;
 import me.kodysimpson.simpapi.SimpAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -65,10 +66,10 @@ public class SmokerRecipe extends Recipe {
 
     @Override
     public String toString() {
-        return "SmokerRecipe{" +
-                "input=" + input +
-                ", experience=" + experience +
-                ", cookingTime=" + cookingTime +
-                "} " + super.toString();
+        return MoreObjects.toStringHelper(this)
+                .add("input", input)
+                .add("experience", experience)
+                .add("cookingTime", cookingTime)
+                .toString();
     }
 }

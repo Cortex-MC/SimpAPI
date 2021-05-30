@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.crafting;
 
+import com.google.common.base.MoreObjects;
 import me.kodysimpson.simpapi.SimpAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -55,8 +56,8 @@ public class StonecutterRecipe extends Recipe {
 
     @Override
     public String toString() {
-        return "StonecutterRecipe{" +
-                "input=" + input +
-                "} " + super.toString();
+        return MoreObjects.toStringHelper(this)
+                .add("input", input)
+                .toString();
     }
 }

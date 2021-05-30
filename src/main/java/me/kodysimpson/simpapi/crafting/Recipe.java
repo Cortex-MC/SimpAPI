@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.crafting;
 
+import com.google.common.base.MoreObjects;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
@@ -25,8 +26,8 @@ public abstract class Recipe {
 
     @Override
     public String toString() {
-        return "Recipe{" +
-                "result=" + result +
-                '}';
+        return MoreObjects.toStringHelper(this)
+                .add("result", result)
+                .toString();
     }
 }

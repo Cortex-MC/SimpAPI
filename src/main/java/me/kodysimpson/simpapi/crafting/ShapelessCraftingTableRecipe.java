@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.crafting;
 
+import com.google.common.base.MoreObjects;
 import me.kodysimpson.simpapi.SimpAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -58,8 +59,8 @@ public class ShapelessCraftingTableRecipe extends Recipe {
 
     @Override
     public String toString() {
-        return "ShapelessCraftingTableRecipe{" +
-                "items=" + items +
-                "} " + super.toString();
+        return MoreObjects.toStringHelper(this)
+                .add("items", items)
+                .toString();
     }
 }

@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.crafting;
 
+import com.google.common.base.MoreObjects;
 import me.kodysimpson.simpapi.SimpAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -61,9 +62,9 @@ public class SmithingTableRecipe extends Recipe {
 
     @Override
     public String toString() {
-        return "SmithingTableRecipe{" +
-                "base=" + base +
-                ", addition=" + addition +
-                "} " + super.toString();
+        return MoreObjects.toStringHelper(this)
+                .add("base", base)
+                .add("addition", addition)
+                .toString();
     }
 }

@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.crafting;
 
+import com.google.common.base.MoreObjects;
 import me.kodysimpson.simpapi.SimpAPI;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -91,9 +92,9 @@ public class CraftingTableRecipe extends Recipe {
 
     @Override
     public String toString() {
-        return "CraftingTableRecipe{" +
-                "items=" + items +
-                ", itemMappings=" + itemMappings +
-                "} " + super.toString();
+        return MoreObjects.toStringHelper(this)
+                .add("items", items)
+                .add("itemMappings", itemMappings)
+                .toString();
     }
 }
