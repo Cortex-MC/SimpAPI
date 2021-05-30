@@ -15,7 +15,7 @@ public class StonecutterRecipe extends Recipe {
     @Override
     public String getType() { return "Stonecutter"; }
 
-    private Material input;
+    private final Material input;
 
     public StonecutterRecipe(ItemStack result, Material input, ItemStack base, ItemStack addition) {
         this.result = result;

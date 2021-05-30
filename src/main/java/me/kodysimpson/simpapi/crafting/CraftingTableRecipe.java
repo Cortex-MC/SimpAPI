@@ -15,9 +15,9 @@ public class CraftingTableRecipe extends Recipe {
     @Override
     public String getType() { return "CraftingTable"; }
 
-    private List<Material> items;
+    private final List<Material> items;
 
-    private Map<Material, Character> itemMappings = new HashMap<>();
+    private final Map<Material, Character> itemMappings = new HashMap<>();
 
     public CraftingTableRecipe(ItemStack result, Material... items) {
         this.result = result;

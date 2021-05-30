@@ -13,9 +13,9 @@ public class SmokerRecipe extends Recipe {
     @Override
     public String getType() { return "Smoker"; }
 
-    private Material input;
-    private float experience;
-    private int cookingTime;
+    private final Material input;
+    private final float experience;
+    private final int cookingTime;
 
     public SmokerRecipe(ItemStack result, Material input, float experience, int cookingTime) {
         this.result = result;

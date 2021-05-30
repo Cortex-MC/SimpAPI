@@ -16,7 +16,7 @@ public class ShapelessCraftingTableRecipe extends Recipe {
     @Override
     public String getType() { return "ShapelessCraftingTable"; }
 
-    private List<Material> items;
+    private final List<Material> items;
 
     public ShapelessCraftingTableRecipe(ItemStack result, Material... items) {
         this.result = result;

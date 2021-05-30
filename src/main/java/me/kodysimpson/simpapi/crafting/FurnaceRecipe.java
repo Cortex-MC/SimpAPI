@@ -12,9 +12,9 @@ public class FurnaceRecipe extends Recipe {
     @Override
     public String getType() { return "Furnace"; }
 
-    private Material input;
-    private float experience;
-    private int cookingTime;
+    private final Material input;
+    private final float experience;
+    private final int cookingTime;
 
     public FurnaceRecipe(ItemStack result, Material input, float experience, int cookingTime) {
         this.result = result;

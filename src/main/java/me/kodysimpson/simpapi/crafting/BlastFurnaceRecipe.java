@@ -13,9 +13,9 @@ public class BlastFurnaceRecipe extends Recipe {
     @Override
     public String getType() { return "BlastFurnace"; }
 
-    private Material input;
-    private float experience;
-    private int cookingTime;
+    private final Material input;
+    private final float experience;
+    private final int cookingTime;
 
     public BlastFurnaceRecipe(ItemStack result, Material input, float experience, int cookingTime) {
         this.result = result;

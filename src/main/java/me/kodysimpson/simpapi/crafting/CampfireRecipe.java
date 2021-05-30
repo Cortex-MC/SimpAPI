@@ -12,9 +12,9 @@ public class CampfireRecipe extends Recipe {
     @Override
     public String getType() { return "Campfire"; }
 
-    private Material input;
-    private float experience;
-    private int cookingTime;
+    private final Material input;
+    private final float experience;
+    private final int cookingTime;
 
     public CampfireRecipe(ItemStack result, Material input, float experience, int cookingTime) {
         this.result = result;

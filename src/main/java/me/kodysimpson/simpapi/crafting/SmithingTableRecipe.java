@@ -15,8 +15,8 @@ public class SmithingTableRecipe extends Recipe {
     @Override
     public String getType() { return "SmithingTable"; }
 
-    private ItemStack base;
-    private ItemStack addition;
+    private final ItemStack base;
+    private final ItemStack addition;
 
     public SmithingTableRecipe(ItemStack result, ItemStack base, ItemStack addition) {
         this.result = result;
