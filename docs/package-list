@@ -2,5 +2,6 @@ me.kodysimpson.simpapi
 me.kodysimpson.simpapi.colors
 me.kodysimpson.simpapi.command
 me.kodysimpson.simpapi.exceptions
+me.kodysimpson.simpapi.filesystem
 me.kodysimpson.simpapi.heads
 me.kodysimpson.simpapi.menu

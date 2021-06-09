@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * An Advanced Command-Managing system allowing you to register subcommands under a core command.
+ */
 public class CommandManager {
 
     /**

@@ -35,6 +35,10 @@ public class ColorTranslator {
         return finalText.toString();
     }
 
+    /**
+     * @param text The text with color codes that you want to turn into a TextComponent
+     * @return the TextComponent with hex colors and regular colors
+     */
     public static TextComponent translateColorCodesToTextComponent(String text){
 
         String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
