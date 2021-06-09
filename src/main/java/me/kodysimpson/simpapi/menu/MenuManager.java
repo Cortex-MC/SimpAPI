@@ -76,7 +76,6 @@ public class MenuManager {
     /**
      * @param menuClass The class reference of the Menu you want to open for a player
      * @param player The player to open the menu for
-     * @throws MenuManagerException
      * @throws MenuManagerNotSetupException Thrown if the setup() method has not been called and used properly
      */
     public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
@@ -92,7 +91,6 @@ public class MenuManager {
     /**
      * @param menuClass The class reference of the Menu you want to open for a player
      * @param abstractPlayerMenuUtility Usually used to pass in a custom PlayerMenuUtility, for data transfer
-     * @throws MenuManagerException
      */
     public static void openMenu(Class<? extends Menu> menuClass, AbstractPlayerMenuUtility abstractPlayerMenuUtility) throws MenuManagerException {
 
@@ -136,7 +134,6 @@ public class MenuManager {
      * @param t The class reference of your custom PlayerMenuUtility
      * @param <T> The custom PlayerMenuUtility Type
      * @return The PlayerMenuUtility for that player
-     * @throws MenuManagerException
      */
     public static <T> T getPlayerMenuUtility(Player p, Class<T> t) throws MenuManagerException {
 
