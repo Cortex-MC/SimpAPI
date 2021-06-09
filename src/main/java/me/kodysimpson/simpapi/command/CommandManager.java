@@ -24,6 +24,7 @@ public class CommandManager {
      * @param aliases A String list of aliases(or nothing for overloaded method)
      * @param subcommands Class reference to each SubCommand you create for this core command
      */
+    @SafeVarargs
     public static void createCoreCommand(JavaPlugin plugin, String commandName,
                                          String commandDescription,
                                          String commandUsage,
@@ -58,6 +59,7 @@ public class CommandManager {
      * @param commandUsage Usage of command as would put it in plugin.yml
      * @param subcommands Class reference to each SubCommand you create for this core command
      */
+    @SafeVarargs
     public static void createCoreCommand(JavaPlugin plugin, String commandName,
                                          String commandDescription,
                                          String commandUsage,
