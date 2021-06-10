@@ -29,14 +29,14 @@ public abstract class SubCommand {
      * @param player The player who ran the command
      * @param args The args passed into the command when run
      */
-    public abstract void perform(Player player, String args[]);
+    public abstract void perform(Player player, String[] args);
 
     /**
      * @param player The player who ran the command
      * @param args The args passed into the command when run
      * @return A list of arguments to be suggested for autocomplete
      */
-    public abstract List<String> getSubcommandArguments(Player player, String args[]);
+    public abstract List<String> getSubcommandArguments(Player player, String[] args);
 
 }
 

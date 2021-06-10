@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public abstract class AbstractPlayerMenuUtility {
 
-    private Player owner;
+    private final Player owner;
 
     public AbstractPlayerMenuUtility(Player p) {
         this.owner = p;

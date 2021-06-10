@@ -3,6 +3,7 @@ package me.kodysimpson.simpapi.command;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,8 +14,8 @@ import java.util.List;
  */
 class CoreCommand extends Command {
 
-    private ArrayList<SubCommand> subcommands;
-    private CommandList commandList;
+    private final ArrayList<SubCommand> subcommands;
+    private final CommandList commandList;
 
     public CoreCommand(String name, String description, String usageMessage, CommandList commandList, List<String> aliases, ArrayList<SubCommand> subCommands){
         super(name, description, usageMessage, aliases);
@@ -28,7 +29,7 @@ class CoreCommand extends Command {
     }
 
     @Override
-    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, String[] args) {
 
         if (sender instanceof Player){
             Player p = (Player) sender;
@@ -57,7 +58,7 @@ class CoreCommand extends Command {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) throws IllegalArgumentException {
         if (args.length == 1){ //prank <subcommand> <args>
             ArrayList<String> subcommandsArguments = new ArrayList<>();
 

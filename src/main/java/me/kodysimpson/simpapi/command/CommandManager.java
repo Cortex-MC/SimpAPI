@@ -36,13 +36,13 @@ public class CommandManager {
 
         Arrays.stream(subcommands).map(subcommand -> {
             try{
-                Constructor constructor = subcommand.getConstructor();
+                Constructor<? extends SubCommand> constructor = subcommand.getConstructor();
                 return constructor.newInstance();
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
             }
             return null;
-        }).forEach(o -> commands.add((SubCommand) o));
+        }).forEach(commands::add);
 
         //THANK YOU OZZYMAR <3 YOUR THE HOMIE
         Field commandField = plugin.getServer().getClass().getDeclaredField("commandMap");
