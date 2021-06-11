@@ -79,13 +79,7 @@ public class MenuManager {
      * @throws MenuManagerNotSetupException Thrown if the setup() method has not been called and used properly
      */
     public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
-
-        try {
-            menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new MenuManagerException();
-        }
-
+        openMenu(menuClass, getPlayerMenuUtility(player));
     }
 
     /**
