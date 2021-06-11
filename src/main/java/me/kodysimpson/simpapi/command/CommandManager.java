@@ -2,6 +2,7 @@ package me.kodysimpson.simpapi.command;
 
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -28,7 +29,7 @@ public class CommandManager {
     public static void createCoreCommand(JavaPlugin plugin, String commandName,
                                          String commandDescription,
                                          String commandUsage,
-                                         CommandList commandList,
+                                         @Nullable CommandList commandList,
                                          List<String> aliases,
                                          Class<? extends SubCommand>... subcommands) throws NoSuchFieldException, IllegalAccessException {
 
@@ -63,7 +64,7 @@ public class CommandManager {
     public static void createCoreCommand(JavaPlugin plugin, String commandName,
                                          String commandDescription,
                                          String commandUsage,
-                                         CommandList commandList,
+                                         @Nullable CommandList commandList,
                                          Class<? extends SubCommand>... subcommands) throws NoSuchFieldException, IllegalAccessException {
         createCoreCommand(plugin, commandName, commandDescription, commandUsage, commandList, Collections.singletonList(""), subcommands);
     }
