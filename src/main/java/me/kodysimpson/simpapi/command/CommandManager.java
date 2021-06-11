@@ -44,7 +44,7 @@ public class CommandManager {
             return null;
         }).forEach(commands::add);
 
-        //THANK YOU OZZYMAR <3 YOUR THE HOMIE
+        //THANK YOU OZZYMAR <3 YOU'RE THE HOMIE
         Field commandField = plugin.getServer().getClass().getDeclaredField("commandMap");
         commandField.setAccessible(true);
         CommandMap commandMap = (CommandMap) commandField.get(plugin.getServer());
