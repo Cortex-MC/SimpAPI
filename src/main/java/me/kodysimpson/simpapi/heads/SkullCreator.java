@@ -10,6 +10,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Base64;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -80,7 +81,7 @@ public class SkullCreator {
         notNull(id, "id");
 
         SkullMeta meta = (SkullMeta) item.getItemMeta();
-        meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
+        Objects.requireNonNull(meta).setOwningPlayer(Bukkit.getOfflinePlayer(id));
         item.setItemMeta(meta);
 
         return item;

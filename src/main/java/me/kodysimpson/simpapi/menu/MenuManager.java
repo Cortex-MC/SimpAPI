@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class MenuManager {
 
     //each player will be assigned their own PlayerMenuUtility object
-    private static HashMap<Player, AbstractPlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+    private static final HashMap<Player, AbstractPlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
     private static Class<? extends AbstractPlayerMenuUtility> pmuClass;
     private static boolean isSetup = false;
     //private static Class<? extends Menu>[] menus;
@@ -106,7 +106,7 @@ public class MenuManager {
         if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a pmu "saved" for them
 
             //Construct PMU using reflection
-            Constructor<? extends AbstractPlayerMenuUtility> constructor = null;
+            Constructor<? extends AbstractPlayerMenuUtility> constructor;
             try {
                 constructor = pmuClass.getConstructor(Player.class);
 

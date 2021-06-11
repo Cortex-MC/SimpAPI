@@ -3,6 +3,7 @@ package me.kodysimpson.simpapi.colors;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.jetbrains.annotations.NotNull;
 
 public class ColorTranslator {
 
@@ -12,7 +13,7 @@ public class ColorTranslator {
      * @param text The string of text to apply color/effects to
      * @return Returns a string of text with color/effects applied
      */
-    public static String translateColorCodes(String text){
+    public static String translateColorCodes(@NotNull String text){
 
         String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
 
@@ -23,7 +24,7 @@ public class ColorTranslator {
                 //get the next string
                 i++;
                 if (texts[i].charAt(0) == '#'){
-                    finalText.append(ChatColor.of(texts[i].substring(0, 7)) + texts[i].substring(7));
+                    finalText.append(ChatColor.of(texts[i].substring(0, 7))).append(texts[i].substring(7));
                 }else{
                     finalText.append(ChatColor.translateAlternateColorCodes('&', "&" + texts[i]));
                 }
@@ -39,7 +40,7 @@ public class ColorTranslator {
      * @param text The text with color codes that you want to turn into a TextComponent
      * @return the TextComponent with hex colors and regular colors
      */
-    public static TextComponent translateColorCodesToTextComponent(String text){
+    public static TextComponent translateColorCodesToTextComponent(@NotNull String text){
 
         String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
 
@@ -53,7 +54,6 @@ public class ColorTranslator {
                 if (texts[i].charAt(0) == '#'){
                     subComponent.setText(texts[i].substring(7));
                     subComponent.setColor(net.md_5.bungee.api.ChatColor.of(texts[i].substring(0, 7)));
-                    builder.append(subComponent);
                 }else{
                     if (texts[i].length() > 1){
                         subComponent.setText(texts[i].substring(1));
@@ -130,8 +130,8 @@ public class ColorTranslator {
                             break;
                     }
 
-                    builder.append(subComponent);
                 }
+                builder.append(subComponent);
             }else{
                 builder.append(texts[i]);
             }
@@ -140,6 +140,4 @@ public class ColorTranslator {
         return new TextComponent(builder.create());
 
     }
-
-
 }
