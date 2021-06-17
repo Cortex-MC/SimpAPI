@@ -1,4 +1,4 @@
-# SimpAPI v4.0.1
+# SimpAPI v4.1.0
 ****
 SimpAPI, finally a good API that can make coding MC Plugins much easier and less painful.
 This API includes all of my primary utilities like *Menu Manager*, *Command Manager*, *ColorTranslator*, and more.
@@ -25,7 +25,7 @@ JavaDocs: https://kodysimpson.github.io/SimpAPI/index.html
 <dependency>
     <groupId>com.github.KodySimpson</groupId>
     <artifactId>SimpAPI</artifactId>
-    <version>4.0.1</version>
+    <version>4.1.0</version>
 </dependency>
 ```
 
@@ -51,14 +51,14 @@ repositories {
 Groovy:
 ```groovy
 dependencies {
-    implementation 'com.github.KodySimpson:SimpAPI:4.0.1'
+    implementation 'com.github.KodySimpson:SimpAPI:4.1.0'
 }
 ```
 
 Kotlin:
 ```kotlin
 dependencies {
-    implementation("com.github.KodySimpson:SimpAPI:4.0.1")
+    implementation("com.github.KodySimpson:SimpAPI:4.1.0")
 }
 ```
 
