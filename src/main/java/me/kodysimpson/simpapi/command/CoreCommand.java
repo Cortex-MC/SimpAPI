@@ -36,7 +36,7 @@ class CoreCommand extends Command {
 
             if (args.length > 0){
                 for (int i = 0; i < getSubCommands().size(); i++){
-                    if (args[0].equalsIgnoreCase(getSubCommands().get(i).getName())){
+                    if (args[0].equalsIgnoreCase(getSubCommands().get(i).getName()) || (getSubCommands().get(i).getAliases() != null && getSubCommands().get(i).getAliases().contains(args[0]))){
                         getSubCommands().get(i).perform(p, args);
                     }
                 }

@@ -16,6 +16,11 @@ public abstract class SubCommand {
     public abstract String getName();
 
     /**
+     * @return The aliases that can be used for this command. Can be null
+     */
+    public abstract List<String> getAliases();
+
+    /**
      * @return A description of what the subcommand does to be displayed
      */
     public abstract String getDescription();
