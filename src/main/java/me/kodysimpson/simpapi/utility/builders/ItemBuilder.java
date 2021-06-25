@@ -180,6 +180,98 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Re-sets the lore.
+     *
+     * @param lore The lore to set it to.
+     */
+    public ItemBuilder setLore(String... lore) {
+        ItemMeta im = is.getItemMeta();
+
+        List<String> l = new ArrayList<>();
+        for (String s : lore) {
+            l.add(ChatColor.translateAlternateColorCodes('&', s));
+        }
+        im.setLore(l);
+
+        is.setItemMeta(im);
+        return this;
+    }
+
+    /**
+     * Re-sets the lore.
+     *
+     * @param lore The lore to set it to.
+     */
+    public ItemBuilder setLore(List<String> lore) {
+        ItemMeta im = is.getItemMeta();
+
+        List<String> l = new ArrayList<>();
+        lore.forEach(s -> l.add(ChatColor.translateAlternateColorCodes('&', s)));
+
+        im.setLore(l);
+        is.setItemMeta(im);
+        return this;
+    }
+
+    /**
+     * Remove a lore line.
+     */
+    public ItemBuilder removeLoreLine(String line) {
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = new ArrayList<>(im.getLore());
+        if (!lore.contains(line)) return this;
+        lore.remove(line);
+        im.setLore(lore);
+        is.setItemMeta(im);
+        return this;
+    }
+
+    /**
+     * Remove a lore line.
+     *
+     * @param index The index of the lore line to remove.
+     */
+    public ItemBuilder removeLoreLine(int index) {
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = new ArrayList<>(im.getLore());
+        if (index < 0 || index > lore.size()) return this;
+        lore.remove(index);
+        im.setLore(lore);
+        is.setItemMeta(im);
+        return this;
+    }
+
+    /**
+     * Add a lore line.
+     *
+     * @param line The lore line to add.
+     */
+    public ItemBuilder addLoreLine(String line) {
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        if (im.hasLore()) lore = new ArrayList<>(im.getLore());
+        lore.add(ChatColor.translateAlternateColorCodes('&', line));
+        im.setLore(lore);
+        is.setItemMeta(im);
+        return this;
+    }
+
+    /**
+     * Add a lore line.
+     *
+     * @param line The lore line to add.
+     * @param pos  The index of where to put it.
+     */
+    public ItemBuilder addLoreLine(String line, int pos) {
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = new ArrayList<>(im.getLore());
+        lore.set(pos, ChatColor.translateAlternateColorCodes('&', line));
+        im.setLore(lore);
+        is.setItemMeta(im);
+        return this;
+    }
+
 
     /**
      * Retrieves the itemstack from the ItemBuilder.
