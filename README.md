@@ -1,4 +1,4 @@
-# SimpAPI v4.1.2
+# SimpAPI v4.1.5
 ****
 SimpAPI, finally a good API that can make coding MC Plugins much easier and less painful.
 This API includes all of my primary utilities like *Menu Manager*, *Command Manager*, *ColorTranslator*, and more.
@@ -25,7 +25,7 @@ JavaDocs: https://kodysimpson.github.io/SimpAPI/index.html
 <dependency>
     <groupId>com.github.KodySimpson</groupId>
     <artifactId>SimpAPI</artifactId>
-    <version>4.1.2</version>
+    <version>4.1.5</version>
 </dependency>
 ```
 
@@ -51,14 +51,14 @@ repositories {
 Groovy:
 ```groovy
 dependencies {
-    implementation 'com.github.KodySimpson:SimpAPI:4.1.2'
+    implementation 'com.github.KodySimpson:SimpAPI:4.1.5'
 }
 ```
 
 Kotlin:
 ```kotlin
 dependencies {
-    implementation("com.github.KodySimpson:SimpAPI:4.1.2")
+    implementation("com.github.KodySimpson:SimpAPI:4.1.5")
 }
 ```
 
@@ -82,43 +82,7 @@ There is also a method for TextComponents called translateColorCodesToTextCompon
 ****
 The Menu Manager is something I came up with a while ago and showed on my Youtube channel, but in the SimpAPI it is much more advanced and has been made much easier for the developers who use it.
 
-**Step One**: Create your PlayerMenuUtility.
-The PlayerMenuUtility is a class system that allows you to pass data across your menu inventories, avoiding situations where you pass them by Items or other tricky methods.
-All you need to do is extend the AbstractPlayerMenuUtility and create the variables for the data you will be passing.
-
-Example:
-```java
-public class PlayerMenuUtility extends AbstractPlayerMenuUtility {
-
-    //Define the data you want passed between menus
-    private Player playerToFreeze;
-    private Player playerToMelt;
-
-    //Make sure to call the super constructor
-    public PlayerMenuUtility(Player p) {
-        super(p);
-    }
-
-    //define the methods to access the data
-    public Player getPlayerToFreeze() {
-        return playerToFreeze;
-    }
-
-    public void setPlayerToFreeze(Player playerToFreeze) {
-        this.playerToFreeze = playerToFreeze;
-    }
-
-    public Player getPlayerToMelt() {
-        return playerToMelt;
-    }
-
-    public void setPlayerToMelt(Player playerToMelt) {
-        this.playerToMelt = playerToMelt;
-    }
-}
-```
-
-**Step Two**: Setup and Initializise the MenuManager by calling the Setup method. Do this in the plugin's onEnable method and all you need to do is provide the PlayerMenuUtility you just created.
+**Step One**: Setup and Initializise the MenuManager by calling the Setup method. Do this in the plugin's onEnable method and all you need to do is provide the PlayerMenuUtility you just created.
 
 ```java
     @Override
@@ -126,63 +90,53 @@ public class PlayerMenuUtility extends AbstractPlayerMenuUtility {
         // Plugin startup logic
 
         //Setup and register the MenuManager. It will take care of the annoying parts.
-        MenuManager.setup(getServer(), this, PlayerMenuUtility.class);
+        MenuManager.setup(getServer(), this);
 
     }
 ```
 
-**Step Three**: Add Menus. 
+**Step Two**: Add Menus. 
 
 ```java
 public class FreezeMainMenu extends Menu {
 
-    //Make sure to add this constructor that calls the Menu superconstructor
-    public FreezeMainMenu(AbstractPlayerMenuUtility pmu) {
-        super(pmu);
+    public FreezeMainMenu(PlayerMenuUtility playerMenuUtility) {
+        super(playerMenuUtility);
     }
 
-    //Override these other methods to give the Menu it's properties and functionality
     @Override
     public String getMenuName() {
         return "Iceberg";
     }
 
-    //Max is 54 slots
     @Override
     public int getSlots() {
         return 9;
     }
 
-    //Return true for this if you want it so that the player cannot
-    //move any items in the menu
     @Override
     public boolean cancelAllClicks() {
         return true;
     }
 
-    //This method is used to handle the clicks of this Menu,
-    //you can see what items they clicked on and then handle it
-    //accordingly.
     @Override
     public void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException {
 
         switch (e.getCurrentItem().getType()){
             case PACKED_ICE:
 
-                MenuManager.openMenu(FreezeListMenu.class, pmu);
+                MenuManager.openMenu(FreezeListMenu.class, playerMenuUtility.getOwner());
 
                 break;
             case LAVA_BUCKET:
 
-                MenuManager.openMenu(MeltListMenu.class, pmu);
+                MenuManager.openMenu(MeltListMenu.class, playerMenuUtility.getOwner());
 
                 break;
         }
 
     }
 
-    //This is how you decide what items go into the menu and where.
-    //inventory is obtained from the Menu superclass.
     @Override
     public void setMenuItems() {
 
@@ -196,68 +150,68 @@ public class FreezeMainMenu extends Menu {
 }
 ```
 
-**How to Open Menus for a Player(Without Data Transfer)**: 
+**How to Open Menus for a Player**: 
 
 This can be called anywhere. Just provide the correct arguments!
 ```java
-MenuManager.openMenu(FreezeListMenu.class, pmu);
+MenuManager.openMenu(FreezeListMenu.class, player);
 ```
 Provide the .class of the Menu Class you want to open for the player,
-and then provide an instance of PlayerMenuUtility. If you are already
-within another Menu, pmu is provided by the superclass. If you are outside
-of that, you will need to obtain a PlayerMenuUtility instance.
+and then provide an instance of the player to open it for.
 
-Outside of a Menu Example:
-
+**Storing Data in the PlayerMenuUtility to be passed between Menus:**
 ```java
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        @Override
+        public void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException {
 
-        if (sender instanceof Player){
-
-            Player p = (Player) sender;
-
-            try {
-                MenuManager.openMenu(FreezeMainMenu.class, MenuManager.getPlayerMenuUtility(p));
-            } catch (MenuManagerException | MenuManagerNotSetupException e) {
-                e.printStackTrace();
+            switch (e.getCurrentItem().getType()){
+                case PLAYER_HEAD:
+        
+                    Player target = Bukkit.getPlayer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+            
+                    playerMenuUtility.setData("playerToFreeze", target);
+            
+                    MenuManager.openMenu(ConfirmFreezeMenu.class, playerMenuUtility.getOwner());
+    
+                    break;
             }
 
         }
-
-        return true;
-    }
 ```
-As you can see, the PlayerMenuUtility can be obtained from calling MenuManager.getPlayerMenuUtility()
-and passing in the player you want to open it for.
 
-**How to Open Menus for a Player(With Data Transfer)**: 
-
+**Retrieving Data from the PlayerMenuUtility:**
 ```java
     @Override
     public void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException {
 
-        //Since you are doing a transfer of data, cast the AbstractPlayerMenuUtility into the PlayerMenuUtility you created.
-        PlayerMenuUtility playerMenuUtility = (PlayerMenuUtility) pmu;
-
         switch (e.getCurrentItem().getType()){
-            case PLAYER_HEAD:
+            case GREEN_BANNER:
 
-                Player target = Bukkit.getPlayer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+                Player target = playerMenuUtility.getData("playerToFreeze", Player.class);
 
-                playerMenuUtility.setPlayerToFreeze(target);
+                playerMenuUtility.getOwner().closeInventory();
+                playerMenuUtility.getOwner().sendMessage(target.getDisplayName() + " has been frozen.");
 
-                MenuManager.openMenu(ConfirmFreezeMenu.class, playerMenuUtility);
+                IcebergMenuManagerModule.getFrozenPlayers().add(target);
 
+                break;
+            case RED_BANNER:
+                MenuManager.openMenu(FreezeListMenu.class, playerMenuUtility.getOwner());
                 break;
         }
 
     }
 ```
 
-You only have to convert an AbstractPlayerMenuUtility into yours when you need to transfer data into the new menu being opened.
+I recommend also making an Enum to go along with your Menus that correspond to the data you will be storing in the PMC(PlayerMenuUtility), it will make it easier to remember and pass in the keys.
+```java
+public enum PMUData {
+    PLAYER_TO_FREEZE,
+    PLAYER_TO_MELT
+}
+```
 
-To transfer data, simply call and use the setter methods you defined like done above.
+These enumerators can be passed into the PMC instead of a String key, they will be converted to a String internally.
 
 ## Command Manager
 *Video*: https://youtu.be/NFYg9Tmk-vo
