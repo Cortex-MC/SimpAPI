@@ -19,15 +19,15 @@ import java.util.Arrays;
 public abstract class Menu implements InventoryHolder {
 
     //Protected values that can be accessed in the menus
-    protected PlayerMenuUtility pmu;
+    protected PlayerMenuUtility playerMenuUtility;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
 
     //Constructor for Menu. Pass in a PlayerMenuUtility so that
     // we have information on who's menu this is and
     // what info is to be transferred
-    public Menu(PlayerMenuUtility pmu) {
-        this.pmu = pmu;
+    public Menu(PlayerMenuUtility playerMenuUtility) {
+        this.playerMenuUtility = playerMenuUtility;
     }
 
     //let each menu decide their name
@@ -55,7 +55,7 @@ public abstract class Menu implements InventoryHolder {
         this.setMenuItems();
 
         //open the inventory for the player
-        pmu.getOwner().openInventory(inventory);
+        playerMenuUtility.getOwner().openInventory(inventory);
     }
 
     //Overridden method from the InventoryHolder interface

@@ -6,7 +6,7 @@
 
     <groupId>me.kodysimpson</groupId>
     <artifactId>SimpAPI</artifactId>
-    <version>4.1.4</version>
+    <version>4.1.5</version>
     <packaging>jar</packaging>
 
     <name>SimpAPI</name>
