@@ -19,14 +19,14 @@ import java.util.Arrays;
 public abstract class Menu implements InventoryHolder {
 
     //Protected values that can be accessed in the menus
-    protected AbstractPlayerMenuUtility pmu;
+    protected PlayerMenuUtility pmu;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
 
     //Constructor for Menu. Pass in a PlayerMenuUtility so that
     // we have information on who's menu this is and
     // what info is to be transferred
-    public Menu(AbstractPlayerMenuUtility pmu) {
+    public Menu(PlayerMenuUtility pmu) {
         this.pmu = pmu;
     }
 
@@ -64,6 +64,9 @@ public abstract class Menu implements InventoryHolder {
         return inventory;
     }
 
+    /**
+     * This will fill all of the empty slots with "filler glass"
+     */
     //Helpful utility method to fill all remaining slots with "filler glass"
     public void setFillerGlass(){
         for (int i = 0; i < getSlots(); i++) {
@@ -86,7 +89,7 @@ public abstract class Menu implements InventoryHolder {
         return item;
     }
 
-    public <T> T PMUCaster(AbstractPlayerMenuUtility abstractPlayerMenuUtility, Class<T> t) {
+    public <T> T PMUCaster(PlayerMenuUtility abstractPlayerMenuUtility, Class<T> t) {
         return t.cast(abstractPlayerMenuUtility);
     }
 

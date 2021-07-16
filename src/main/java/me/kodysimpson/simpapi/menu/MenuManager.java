@@ -18,8 +18,8 @@ import java.util.HashMap;
 public class MenuManager {
 
     //each player will be assigned their own PlayerMenuUtility object
-    private static final HashMap<Player, AbstractPlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
-    private static Class<? extends AbstractPlayerMenuUtility> pmuClass;
+    private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+    private static Class<? extends PlayerMenuUtility> pmuClass;
     private static boolean isSetup = false;
     //private static Class<? extends Menu>[] menus;
 
@@ -51,7 +51,7 @@ public class MenuManager {
 
     }
 
-    private static void registerPlayerMenuUtility(Class<? extends AbstractPlayerMenuUtility> playerMenuUtilityClass) {
+    private static void registerPlayerMenuUtility(Class<? extends PlayerMenuUtility> playerMenuUtilityClass) {
 
         MenuManager.pmuClass = playerMenuUtilityClass;
 
@@ -62,7 +62,7 @@ public class MenuManager {
      * @param plugin The instance of the plugin using this API. Can provide in plugin class by passing this keyword
      * @param playerMenuUtilityClass The class reference of your concrete defined PlayerMenuUtility subclass of AbstractPlayerMenuUtility
      */
-    public static void setup(Server server, Plugin plugin, Class<? extends AbstractPlayerMenuUtility> playerMenuUtilityClass) {
+    public static void setup(Server server, Plugin plugin, Class<? extends PlayerMenuUtility> playerMenuUtilityClass) {
 
         System.out.println("MENU MANAGER HAS BEEN SETUP");
 
@@ -86,27 +86,27 @@ public class MenuManager {
      * @param menuClass The class reference of the Menu you want to open for a player
      * @param abstractPlayerMenuUtility Usually used to pass in a custom PlayerMenuUtility, for data transfer
      */
-    public static void openMenu(Class<? extends Menu> menuClass, AbstractPlayerMenuUtility abstractPlayerMenuUtility) throws MenuManagerException {
+    public static void openMenu(Class<? extends Menu> menuClass, PlayerMenuUtility abstractPlayerMenuUtility) throws MenuManagerException {
 
         try {
-            menuClass.getConstructor(AbstractPlayerMenuUtility.class).newInstance(abstractPlayerMenuUtility).open();
+            menuClass.getConstructor(PlayerMenuUtility.class).newInstance(abstractPlayerMenuUtility).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MenuManagerException();
         }
 
     }
 
-    public static AbstractPlayerMenuUtility getPlayerMenuUtility(Player p) throws MenuManagerException, MenuManagerNotSetupException {
+    public static PlayerMenuUtility getPlayerMenuUtility(Player p) throws MenuManagerException, MenuManagerNotSetupException {
 
         if (!isSetup){
             throw new MenuManagerNotSetupException();
         }
 
-        AbstractPlayerMenuUtility playerMenuUtility;
+        PlayerMenuUtility playerMenuUtility;
         if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a pmu "saved" for them
 
             //Construct PMU using reflection
-            Constructor<? extends AbstractPlayerMenuUtility> constructor;
+            Constructor<? extends PlayerMenuUtility> constructor;
             try {
                 constructor = pmuClass.getConstructor(Player.class);
 
@@ -131,12 +131,12 @@ public class MenuManager {
      */
     public static <T> T getPlayerMenuUtility(Player p, Class<T> t) throws MenuManagerException {
 
-        AbstractPlayerMenuUtility playerMenuUtility;
+        PlayerMenuUtility playerMenuUtility;
         if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a PMU "saved" for them
 
             try{
                 //Construct PMU using reflection
-                Constructor<? extends AbstractPlayerMenuUtility> constructor = pmuClass.getConstructor(Player.class);
+                Constructor<? extends PlayerMenuUtility> constructor = pmuClass.getConstructor(Player.class);
 
                 playerMenuUtility = constructor.newInstance(p);
                 playerMenuUtilityMap.put(p, playerMenuUtility);
