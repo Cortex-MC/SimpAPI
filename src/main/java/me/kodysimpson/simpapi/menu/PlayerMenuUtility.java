@@ -79,5 +79,9 @@ public class PlayerMenuUtility {
         return this.history.pop();
     }
 
+    public void pushMenu(Menu menu){
+        this.history.push(menu);
+    }
+
 }
 

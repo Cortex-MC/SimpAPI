@@ -56,6 +56,7 @@ public abstract class Menu implements InventoryHolder {
 
         //open the inventory for the player
         playerMenuUtility.getOwner().openInventory(inventory);
+        playerMenuUtility.pushMenu(this);
     }
 
     public void back() throws MenuManagerException, MenuManagerNotSetupException {
