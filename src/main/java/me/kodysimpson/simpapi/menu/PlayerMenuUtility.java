@@ -10,11 +10,13 @@ Companion class to all menus. This is needed to pass information across the enti
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 public class PlayerMenuUtility {
 
     private final Player owner;
     private final HashMap<String, Object> dataMap = new HashMap<>();
+    private final Stack<Menu> history = new Stack<>();
 
     public PlayerMenuUtility(Player p) {
         this.owner = p;
@@ -68,6 +70,13 @@ public class PlayerMenuUtility {
         }else{
             return classRef.cast(obj);
         }
+    }
+
+    /**
+     * @return Get the previous menu that was opened for the player
+     */
+    public Menu lastMenu(){
+        return this.history.pop();
     }
 
 }

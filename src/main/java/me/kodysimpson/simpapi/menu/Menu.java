@@ -58,6 +58,10 @@ public abstract class Menu implements InventoryHolder {
         playerMenuUtility.getOwner().openInventory(inventory);
     }
 
+    public void back() throws MenuManagerException, MenuManagerNotSetupException {
+        MenuManager.openMenu(playerMenuUtility.lastMenu().getClass(), playerMenuUtility.getOwner());
+    }
+
     //Overridden method from the InventoryHolder interface
     @Override
     public @NotNull Inventory getInventory() {
