@@ -1,8 +1,17 @@
-package me.kodysimpson.simpapi.filesystem;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.logging.Level;
 
 public class FileDataManager {
 
-  private final Plugin PLUGIN;
+    private final Plugin PLUGIN;
 
     private final String FILENAME;
 
@@ -11,14 +20,12 @@ public class FileDataManager {
     private FileConfiguration config;
 
     private File configFile;
-  
-    //Diffrent ways to save files
 
-    public FileDataManager(String filename, Boolean saveDefault) {
+    public FileDataManager(Plugin mainClass, String filename, Boolean saveDefault) {
         if (!filename.endsWith(".yml"))
             filename = filename + ".yml";
         this.FILENAME = filename;
-        this.PLUGIN = CoreMain.getInstance();
+        this.PLUGIN = mainClass;
         this.FOLDER = this.PLUGIN.getDataFolder();
         this.config = null;
         this.configFile = null;
@@ -27,11 +34,11 @@ public class FileDataManager {
         reload();
     }
 
-    public FileDataManager(String folder, String filename, Boolean saveDefault) {
+    public FileDataManager(Plugin mainClass, String folder, String filename, Boolean saveDefault) {
         if (!filename.endsWith(".yml"))
             filename = filename + ".yml";
         this.FILENAME = filename;
-        this.PLUGIN = CoreMain.getInstance();
+        this.PLUGIN = mainClass;
         this.FOLDER = new File(this.PLUGIN.getDataFolder() + File.separator + folder);
         this.config = null;
         this.configFile = null;
@@ -40,24 +47,11 @@ public class FileDataManager {
         reload();
     }
 
-    public FileDataManager(File folder, String filename, Boolean saveDefault) {
+    public FileDataManager(Plugin mainClass, File folder, String filename, Boolean saveDefault) {
         if (!filename.endsWith(".yml"))
             filename = filename + ".yml";
         this.FILENAME = filename;
-        this.PLUGIN = CoreMain.getInstance();
-        this.FOLDER = folder;
-        this.config = null;
-        this.configFile = null;
-        if (saveDefault)
-            saveDefaultConfig();
-        reload();
-    }
-
-    public FileDataManager(File folder, String filename, Plugin pl, Boolean saveDefault) {
-        if (!filename.endsWith(".yml"))
-            filename = filename + ".yml";
-        this.FILENAME = filename;
-        this.PLUGIN = pl;
+        this.PLUGIN = mainClass;
         this.FOLDER = folder;
         this.config = null;
         this.configFile = null;
@@ -72,7 +66,6 @@ public class FileDataManager {
         return this.config;
     }
 
-    //Reloads files
     public void reload() {
         if (!this.FOLDER.exists())
             try {
@@ -89,9 +82,7 @@ public class FileDataManager {
             } catch (IOException ignored) {}
         this.config = YamlConfiguration.loadConfiguration(this.configFile);
     }
-  
-  
-    //Saves premade config files
+
     public void saveDefaultConfig() {
         if (this.configFile == null)
             this.configFile = new File(this.PLUGIN.getDataFolder(), this.FILENAME);
@@ -109,4 +100,28 @@ public class FileDataManager {
         }
     }
 
+    public void set(String path, Object o) {
+        getConfig().set(path, o);
+    }
+
+    public void setExists(String path, Object o) {
+        if (!getConfig().contains(path)) {
+            getConfig().set(path, o);
+            save();
+        }
+    }
+
+    public void setLocation(String path, Location l) {
+        getConfig().set(path + ".w", Objects.requireNonNull(l.getWorld()).getName());
+        getConfig().set(path + ".x", l.getX());
+        getConfig().set(path + ".y", l.getY());
+        getConfig().set(path + ".z", l.getZ());
+        getConfig().set(path + ".yaw", l.getYaw());
+        getConfig().set(path + ".pitch", l.getPitch());
+        save();
+    }
+
+    public Location getLocation(String path) {
+        return new Location(Bukkit.getWorld(Objects.requireNonNull(getConfig().getString(path + ".w"))), getConfig().getDouble(path + ".x"), getConfig().getDouble(path + ".y"), getConfig().getDouble(path + ".z"), Float.parseFloat(String.valueOf(getConfig().getDouble(path + ".yaw"))), Float.parseFloat(String.valueOf(getConfig().getDouble(path + ".pitch"))));
+    }
 }
