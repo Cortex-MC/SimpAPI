@@ -2,7 +2,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +10,7 @@ import java.util.logging.Level;
 
 public class FileDataManager {
 
-    private final Plugin PLUGIN;
+    private final JavaPlugin PLUGIN;
 
     private final String FILENAME;
 
@@ -21,7 +20,7 @@ public class FileDataManager {
 
     private File configFile;
 
-    public FileDataManager(Plugin mainClass, String filename, Boolean saveDefault) {
+    public FileDataManager(JavaPlugin mainClass, String filename, Boolean saveDefault) {
         if (!filename.endsWith(".yml"))
             filename = filename + ".yml";
         this.FILENAME = filename;
@@ -34,7 +33,7 @@ public class FileDataManager {
         reload();
     }
 
-    public FileDataManager(Plugin mainClass, String folder, String filename, Boolean saveDefault) {
+    public FileDataManager(JavaPlugin mainClass, String folder, String filename, Boolean saveDefault) {
         if (!filename.endsWith(".yml"))
             filename = filename + ".yml";
         this.FILENAME = filename;
@@ -47,7 +46,7 @@ public class FileDataManager {
         reload();
     }
 
-    public FileDataManager(Plugin mainClass, File folder, String filename, Boolean saveDefault) {
+    public FileDataManager(JavaPlugin mainClass, File folder, String filename, Boolean saveDefault) {
         if (!filename.endsWith(".yml"))
             filename = filename + ".yml";
         this.FILENAME = filename;
