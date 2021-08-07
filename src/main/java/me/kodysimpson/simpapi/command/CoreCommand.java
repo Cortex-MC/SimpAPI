@@ -52,6 +52,8 @@ class CoreCommand extends Command {
                 }
             }
 
+        }else{
+            System.out.println("You must be a player to execute this command");
         }
 
         return true;

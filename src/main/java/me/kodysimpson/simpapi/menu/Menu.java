@@ -4,6 +4,7 @@ import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -20,6 +21,7 @@ public abstract class Menu implements InventoryHolder {
 
     //Protected values that can be accessed in the menus
     protected PlayerMenuUtility playerMenuUtility;
+    protected Player p;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
 
@@ -28,6 +30,7 @@ public abstract class Menu implements InventoryHolder {
     // what info is to be transferred
     public Menu(PlayerMenuUtility playerMenuUtility) {
         this.playerMenuUtility = playerMenuUtility;
+        this.p = playerMenuUtility.getOwner();
     }
 
     //let each menu decide their name
