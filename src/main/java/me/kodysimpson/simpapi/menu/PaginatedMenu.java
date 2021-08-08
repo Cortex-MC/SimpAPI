@@ -22,12 +22,12 @@ public abstract class PaginatedMenu extends Menu {
         super(playerMenuUtility);
     }
 
-    public abstract List<Object> getData();
+    public abstract <T> List<T> getData();
 
     public abstract void loopCode(Object object);
 
     //Set the border and menu buttons for the menu
-    public void addMenuBorder(){
+    protected void addMenuBorder(){
         inventory.setItem(48, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Left"));
 
         inventory.setItem(49, makeItem(Material.BARRIER, ChatColor.DARK_RED + "Close"));
