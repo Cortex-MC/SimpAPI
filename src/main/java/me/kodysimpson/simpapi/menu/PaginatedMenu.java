@@ -2,7 +2,10 @@ package me.kodysimpson.simpapi.menu;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class PaginatedMenu extends Menu {
@@ -34,15 +37,19 @@ public abstract class PaginatedMenu extends Menu {
      */
     public abstract void loopCode(Object object);
 
+    /**
+     * @return A hashmap of items you want to be placed in the paginated menu border. This will override any items already placed by default. Key = slot, Value = Item
+     */
+    @Nullable
+    public abstract HashMap<Integer, ItemStack> getCustomMenuBorderItems();
 
     /**
-     * Set the border and menu buttons for the menu. Override this method to provide a custom menu border
+     * Set the border and menu buttons for the menu. Override this method to provide a custom menu border or specify custom items in customMenuBorderItems()
      */
     protected void addMenuBorder(){
+
         inventory.setItem(48, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Left"));
-
         inventory.setItem(49, makeItem(Material.BARRIER, ChatColor.DARK_RED + "Close"));
-
         inventory.setItem(50, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Right"));
 
         for (int i = 0; i < 10; i++) {
@@ -63,6 +70,12 @@ public abstract class PaginatedMenu extends Menu {
                 inventory.setItem(i, super.FILLER_GLASS);
             }
         }
+
+        //place the custom items if they exist
+        if (getCustomMenuBorderItems() != null){
+            getCustomMenuBorderItems().forEach((integer, itemStack) -> inventory.setItem(integer, itemStack));
+        }
+
     }
 
     /**
