@@ -31,29 +31,22 @@ class CoreCommand extends Command {
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, String[] args) {
 
-        if (sender instanceof Player){
-            Player p = (Player) sender;
-
-            if (args.length > 0){
-                for (int i = 0; i < getSubCommands().size(); i++){
-                    if (args[0].equalsIgnoreCase(getSubCommands().get(i).getName()) || (getSubCommands().get(i).getAliases() != null && getSubCommands().get(i).getAliases().contains(args[0]))){
-                        getSubCommands().get(i).perform(p, args);
-                    }
-                }
-            }else {
-                if (commandList == null){
-                    p.sendMessage("--------------------------------");
-                    for (SubCommand subcommand : subcommands) {
-                        p.sendMessage(subcommand.getSyntax() + " - " + subcommand.getDescription());
-                    }
-                    p.sendMessage("--------------------------------");
-                }else{
-                    commandList.displayCommandList(p, subcommands);
+        if (args.length > 0){
+            for (int i = 0; i < getSubCommands().size(); i++){
+                if (args[0].equalsIgnoreCase(getSubCommands().get(i).getName()) || (getSubCommands().get(i).getAliases() != null && getSubCommands().get(i).getAliases().contains(args[0]))){
+                    getSubCommands().get(i).perform(sender, args);
                 }
             }
-
-        }else{
-            System.out.println("You must be a player to execute this command");
+        }else {
+            if (commandList == null){
+                sender.sendMessage("--------------------------------");
+                for (SubCommand subcommand : subcommands) {
+                    sender.sendMessage(subcommand.getSyntax() + " - " + subcommand.getDescription());
+                }
+                sender.sendMessage("--------------------------------");
+            }else{
+                commandList.displayCommandList(sender, subcommands);
+            }
         }
 
         return true;

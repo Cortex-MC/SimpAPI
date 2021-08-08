@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.command;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -31,10 +32,10 @@ public abstract class SubCommand {
     public abstract String getSyntax();
 
     /**
-     * @param player The player who ran the command
+     * @param sender The thing that ran the command
      * @param args The args passed into the command when run
      */
-    public abstract void perform(Player player, String[] args);
+    public abstract void perform(CommandSender sender, String[] args);
 
     /**
      * @param player The player who ran the command

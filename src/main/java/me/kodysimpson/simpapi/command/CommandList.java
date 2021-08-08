@@ -1,6 +1,6 @@
 package me.kodysimpson.simpapi.command;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
 public interface CommandList {
 
     /**
-     * @param player The player to list the commands to
+     * @param sender The thing that ran the command
      * @param subCommandList A list of all the subcommands you can display
      */
-    void displayCommandList(Player player, List<SubCommand> subCommandList);
+    void displayCommandList(CommandSender sender, List<SubCommand> subCommandList);
 
 }
