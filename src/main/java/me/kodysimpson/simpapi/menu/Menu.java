@@ -66,6 +66,11 @@ public abstract class Menu implements InventoryHolder {
         MenuManager.openMenu(playerMenuUtility.lastMenu().getClass(), playerMenuUtility.getOwner());
     }
 
+    protected void reload() throws MenuManagerException, MenuManagerNotSetupException {
+        p.closeInventory();
+        MenuManager.openMenu(this.getClass(), playerMenuUtility.getOwner());
+    }
+
     //Overridden method from the InventoryHolder interface
     @Override
     public @NotNull Inventory getInventory() {

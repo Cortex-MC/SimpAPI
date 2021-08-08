@@ -22,6 +22,10 @@ public abstract class PaginatedMenu extends Menu {
         super(playerMenuUtility);
     }
 
+    public abstract List<Object> getData();
+
+    public abstract void loopCode(Object object);
+
     //Set the border and menu buttons for the menu
     public void addMenuBorder(){
         inventory.setItem(48, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Left"));
@@ -48,6 +52,26 @@ public abstract class PaginatedMenu extends Menu {
                 inventory.setItem(i, super.FILLER_GLASS);
             }
         }
+    }
+
+    @Override
+    public void setMenuItems() {
+
+        addMenuBorder();
+
+        List<Object> data = getData();
+
+        if (data != null && !data.isEmpty()) {
+            for (int i = 0; i < getMaxItemsPerPage(); i++) {
+                index = getMaxItemsPerPage() * page + i;
+                if (index >= data.size()) break;
+                if (data.get(index) != null) {
+                    loopCode(data.get(index)); //run the code defined by the user
+                }
+            }
+        }
+
+
     }
 
     public int getMaxItemsPerPage() {
