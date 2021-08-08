@@ -80,6 +80,9 @@ public class MenuManager {
             menuClass.getConstructor(PlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             System.out.println(e);
+            System.out.println("STACK TRACEEEEE");
+            e.printStackTrace();
+            System.out.println("ENDING STACK TRAAACEEEE");
             throw new MenuManagerException();
         }
     }
