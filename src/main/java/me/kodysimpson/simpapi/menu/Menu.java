@@ -83,6 +83,14 @@ public abstract class Menu implements InventoryHolder {
             }
         }
     }
+    
+    public void setFillerGlass(ItemStack itemStack) {
+        for (int i = 0; i < getSlots(); i++) {
+            if (inventory.getItem(i) == null){
+                inventory.setItem(i, itemStack);
+            }
+        }
+    }
 
     public ItemStack makeItem(Material material, String displayName, String... lore) {
 
