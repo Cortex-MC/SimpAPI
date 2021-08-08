@@ -79,6 +79,7 @@ public class MenuManager {
         try {
             menuClass.getConstructor(PlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            System.out.println(e);
             throw new MenuManagerException();
         }
     }
