@@ -105,9 +105,5 @@ public abstract class Menu implements InventoryHolder {
         return item;
     }
 
-    public <T> T PMUCaster(PlayerMenuUtility abstractPlayerMenuUtility, Class<T> t) {
-        return t.cast(abstractPlayerMenuUtility);
-    }
-
 }
 
