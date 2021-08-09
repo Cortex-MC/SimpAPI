@@ -110,7 +110,7 @@ public abstract class PaginatedMenu extends Menu {
             return false;
         }else{
             page = page - 1;
-            reload();
+            reloadItems();
             return true;
         }
     }
@@ -121,7 +121,7 @@ public abstract class PaginatedMenu extends Menu {
     public boolean nextPage(){
         if (!((index + 1) >= getData().size())) {
             page = page + 1;
-            reload();
+            reloadItems();
             return true;
         } else {
             return false;
