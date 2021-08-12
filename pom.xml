@@ -6,7 +6,7 @@
 
     <groupId>me.kodysimpson</groupId>
     <artifactId>SimpAPI</artifactId>
-    <version>4.2.1</version>
+    <version>4.2.2</version>
     <packaging>jar</packaging>
 
     <name>SimpAPI</name>
@@ -87,6 +87,17 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>21.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.12.4</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
