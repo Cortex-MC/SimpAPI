@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ConfigManager {
 
-    enum FileType{
+    public enum FileType{
         JSON, YAML
     }
 
