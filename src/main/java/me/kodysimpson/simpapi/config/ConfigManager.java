@@ -3,6 +3,7 @@ package me.kodysimpson.simpapi.config;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -56,6 +57,7 @@ public class ConfigManager {
             }else{
                 //since it exists already, load the values into the object
                 try {
+                    plugin.getLogger().info("Attempting to read " + fileName + " config file.");
                     T t = mapper.readValue(messagesConfigFile, configClass);
                     saveConfig(plugin, t);
                     return t;
@@ -84,6 +86,8 @@ public class ConfigManager {
             String fileName = configAnnotation.fileName();
             FileType fileType = configAnnotation.fileType();
 
+            plugin.getLogger().info("Attempting to save " + fileName + " config file.");
+
             File messagesConfigFile = getConfigFile(plugin, fileName, fileType);
             ObjectMapper mapper = getObjectMapper(fileType);
 
@@ -111,7 +115,7 @@ public class ConfigManager {
         if (fileType == FileType.YAML){
             return new ObjectMapper(new YAMLFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         }else{
-            return new ObjectMapper(new JsonFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            return new ObjectMapper(new JsonFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).setDefaultPrettyPrinter(new DefaultPrettyPrinter());
         }
     }
 
