@@ -18,62 +18,101 @@ public class ConfigManager {
         JSON, YAML
     }
 
-    public static <T> T loadConfig(JavaPlugin plugin, Class<T> configClass, String fileName, ConfigManager.FileType fileType) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    /**
+     * @param plugin An instance of your plugin
+     * @param configClass A class reference to a Java class annotated with @Config containing your config values
+     * @param <T> The generic type of the Config class
+     * @return A new instance of the Config class to be used throughout your plugin
+     */
+    public static <T> T loadConfig(JavaPlugin plugin, Class<T> configClass) {
 
         T config = null;
-        File messagesConfigFile = null;
-        ObjectMapper mapper = null;
 
-        String fileNameA = configClass.getAnnotation(Config.class).fileName();
-        System.out.println("Grabbed filename: " + fileNameA);
+        Config configAnnotation = configClass.getAnnotation(Config.class);
 
-        if (fileType == ConfigManager.FileType.YAML){
-            messagesConfigFile = new File(plugin.getDataFolder(), fileName + ".yml");
-            mapper = new ObjectMapper(new YAMLFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        }else if(fileType == ConfigManager.FileType.JSON){
-            messagesConfigFile = new File(plugin.getDataFolder(), fileName + ".json");
-            mapper = new ObjectMapper(new JsonFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        }
-
-        if (!messagesConfigFile.exists()){
-            config = configClass.getConstructor().newInstance();
-
-            try {
-                mapper.writeValue(messagesConfigFile, config);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (configAnnotation == null) {
+            plugin.getLogger().severe("The provided Configuration Java class was not annotated properly with @Config from SimpAPI. Therefore the config could not be loaded.");
+            plugin.getPluginLoader().disablePlugin(plugin);
         }else{
-            //since it exists already, load the values into the object
-            try {
-                T t = mapper.readValue(messagesConfigFile, configClass);
-                saveConfig(plugin, t, fileName, ConfigManager.FileType.YAML);
-                return t;
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            String fileName = configAnnotation.fileName();
+            FileType fileType = configAnnotation.fileType();
+
+            File messagesConfigFile = getConfigFile(plugin, fileName, fileType);
+            ObjectMapper mapper = getObjectMapper(fileType);
+
+            if (!messagesConfigFile.exists()){
+                try {
+                    config = configClass.getConstructor().newInstance();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    mapper.writeValue(messagesConfigFile, config);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                //since it exists already, load the values into the object
+                try {
+                    T t = mapper.readValue(messagesConfigFile, configClass);
+                    saveConfig(plugin, t);
+                    return t;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
+
         return config;
     }
 
-    public static void saveConfig(JavaPlugin plugin, Object configObject, String fileName, ConfigManager.FileType fileType) {
+    /**
+     * @param plugin Your plugin class
+     * @param configObject An instance of your Config class to use to save the contents of it to file
+     */
+    public static void saveConfig(JavaPlugin plugin, Object configObject) {
 
-        File messagesConfigFile = null;
-        ObjectMapper mapper = null;
-        if (fileType == ConfigManager.FileType.YAML){
-            messagesConfigFile = new File(plugin.getDataFolder(), fileName + ".yml");
-            mapper = new ObjectMapper(new YAMLFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        }else if(fileType == ConfigManager.FileType.JSON){
-            messagesConfigFile = new File(plugin.getDataFolder(), fileName + ".json");
-            mapper = new ObjectMapper(new JsonFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        Config configAnnotation = configObject.getClass().getAnnotation(Config.class);
+        if (configAnnotation == null){
+            plugin.getLogger().severe("The provided Configuration Java class was not annotated properly with @Config from SimpAPI. Therefore the config could not be saved.");
+            plugin.getPluginLoader().disablePlugin(plugin);
+        }else{
+
+            String fileName = configAnnotation.fileName();
+            FileType fileType = configAnnotation.fileType();
+
+            File messagesConfigFile = getConfigFile(plugin, fileName, fileType);
+            ObjectMapper mapper = getObjectMapper(fileType);
+
+            try {
+                mapper.writeValue(messagesConfigFile, configObject);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        try {
-            mapper.writeValue(messagesConfigFile, configObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    }
 
+    private static File getConfigFile(JavaPlugin plugin, String fileName, FileType fileType){
+        switch (fileType) {
+            case YAML:
+                return new File(plugin.getDataFolder(), fileName + ".yml");
+            case JSON:
+                return new File(plugin.getDataFolder(), fileName + ".json");
+            default:
+                return null;
+        }
+    }
+
+    private static ObjectMapper getObjectMapper(FileType fileType) {
+        if (fileType == FileType.YAML){
+            return new ObjectMapper(new YAMLFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        }else{
+            return new ObjectMapper(new JsonFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        }
     }
 
 }
