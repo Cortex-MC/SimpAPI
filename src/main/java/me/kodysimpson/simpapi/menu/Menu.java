@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.menu;
 
+import me.kodysimpson.simpapi.colors.ColorTranslator;
 import me.kodysimpson.simpapi.exceptions.MenuManagerException;
 import me.kodysimpson.simpapi.exceptions.MenuManagerNotSetupException;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /*
     Defines the behavior and attributes of all menus in our plugin
@@ -95,7 +97,10 @@ public abstract class Menu implements InventoryHolder {
             }
         }
     }
-    
+
+    /**
+     * @param itemStack Placed into every empty slot when ran
+     */
     public void setFillerGlass(ItemStack itemStack) {
         for (int i = 0; i < getSlots(); i++) {
             if (inventory.getItem(i) == null){
@@ -104,6 +109,12 @@ public abstract class Menu implements InventoryHolder {
         }
     }
 
+    /**
+     * @param material The material to base the ItemStack on
+     * @param displayName The display name of the ItemStack
+     * @param lore The lore of the ItemStack, with the Strings being automatically color coded with ColorTranslator
+     * @return The constructed ItemStack object
+     */
     public ItemStack makeItem(Material material, String displayName, String... lore) {
 
         ItemStack item = new ItemStack(material);
@@ -111,7 +122,8 @@ public abstract class Menu implements InventoryHolder {
         assert itemMeta != null;
         itemMeta.setDisplayName(displayName);
 
-        itemMeta.setLore(Arrays.asList(lore));
+        //Automatically translate color codes provided
+        itemMeta.setLore(Arrays.stream(lore).map(ColorTranslator::translateColorCodes).collect(Collectors.toList()));
         item.setItemMeta(itemMeta);
 
         return item;

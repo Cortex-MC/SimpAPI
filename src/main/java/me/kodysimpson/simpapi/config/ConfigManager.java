@@ -3,6 +3,7 @@ package me.kodysimpson.simpapi.config;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.PrettyPrinter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class ConfigManager {
+
+    private PrettyPrinter prettyPrinter = null;
 
     public enum FileType{
         JSON, YAML
