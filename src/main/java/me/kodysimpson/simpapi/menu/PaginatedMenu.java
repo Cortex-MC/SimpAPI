@@ -27,10 +27,9 @@ public abstract class PaginatedMenu extends Menu {
     }
 
     /**
-     * @param <T> The datatype of the data in the list
      * @return A list of the data being paginated. usually this is a list of items but it can be anything
      */
-    public abstract <T> List<T> getData();
+    public abstract List<?> getData();
 
     /**
      * @param object A single element of the data list that you do something with. It is recommended that you turn this into an item if it is not already and then put it into the inventory as you would with a normal Menu. You can execute any other logic in here as well.
@@ -86,7 +85,7 @@ public abstract class PaginatedMenu extends Menu {
 
         addMenuBorder();
 
-        List<Object> data = getData();
+        List<Object> data = (List<Object>) getData();
 
         if (data != null && !data.isEmpty()) {
             for (int i = 0; i < getMaxItemsPerPage(); i++) {
