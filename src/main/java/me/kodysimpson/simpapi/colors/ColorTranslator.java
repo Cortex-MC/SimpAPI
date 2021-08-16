@@ -5,35 +5,33 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ColorTranslator {
 
-    static public final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
+    private static final Pattern HEX_PATTERN = Pattern.compile("(&#[0-9a-fA-F]{6})");
+    public static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 
     /**
      * @param text The string of text to apply color/effects to
      * @return Returns a string of text with color/effects applied
      */
     public static String translateColorCodes(@NotNull String text){
-
-        String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
-
-        StringBuilder finalText = new StringBuilder();
-
-        for (int i = 0; i < texts.length; i++){
-            if (texts[i].equalsIgnoreCase("&")){
-                //get the next string
-                i++;
-                if (texts[i].charAt(0) == '#'){
-                    finalText.append(ChatColor.of(texts[i].substring(0, 7))).append(texts[i].substring(7));
-                }else{
-                    finalText.append(ChatColor.translateAlternateColorCodes('&', "&" + texts[i]));
-                }
-            }else{
-                finalText.append(texts[i]);
-            }
+        //good thing we're stuck on java 8, which means we can't use this (:
+        // String hexColored = HEX_PATTERN.matcher(text)
+        //      .replaceAll(match -> "" + ChatColor.of(match.group(1)));
+        Matcher matcher = HEX_PATTERN.matcher(text);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            String hex = matcher.group(1).substring(1);
+            matcher.appendReplacement(sb, "" + ChatColor.of(hex));
         }
+        matcher.appendTail(sb);
 
-        return finalText.toString();
+        String hexColored = sb.toString();
+
+        return ChatColor.translateAlternateColorCodes('&', hexColored);
     }
 
     /**
