@@ -1,39 +1,40 @@
 package me.kodysimpson.simpapi.colors;
 
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ColorTranslator {
 
-    static public final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
+    private static final Pattern HEX_PATTERN = Pattern.compile("(&#[0-9a-fA-F]{6})");
+
+    @Deprecated
+    public static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 
     /**
      * @param text The string of text to apply color/effects to
      * @return Returns a string of text with color/effects applied
      */
     public static String translateColorCodes(@NotNull String text){
-
-        String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
-
-        StringBuilder finalText = new StringBuilder();
-
-        for (int i = 0; i < texts.length; i++){
-            if (texts[i].equalsIgnoreCase("&")){
-                //get the next string
-                i++;
-                if (texts[i].charAt(0) == '#'){
-                    finalText.append(ChatColor.of(texts[i].substring(0, 7))).append(texts[i].substring(7));
-                }else{
-                    finalText.append(ChatColor.translateAlternateColorCodes('&', "&" + texts[i]));
-                }
-            }else{
-                finalText.append(texts[i]);
-            }
+        //good thing we're stuck on java 8, which means we can't use this (:
+        // String hexColored = HEX_PATTERN.matcher(text)
+        //      .replaceAll(match -> "" + ChatColor.of(match.group(1)));
+        Matcher matcher = HEX_PATTERN.matcher(text);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            String hex = matcher.group(1).substring(1);
+            matcher.appendReplacement(sb, "" + ChatColor.of(hex));
         }
+        matcher.appendTail(sb);
 
-        return finalText.toString();
+        String hexColored = sb.toString();
+
+        return ChatColor.translateAlternateColorCodes('&', hexColored);
     }
 
     /**
@@ -41,103 +42,18 @@ public class ColorTranslator {
      * @return the TextComponent with hex colors and regular colors
      */
     public static TextComponent translateColorCodesToTextComponent(@NotNull String text){
+        //This is done solely to ensure hex color codes are in the format
+        //fromLegacyText expects:
+        //&#FF0000 -> &x&f&f&0&0&0&0
+        String colored = translateColorCodes(text);
 
-        String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
+        TextComponent base = new TextComponent();
+        BaseComponent[] converted = TextComponent.fromLegacyText(colored);
 
-        ComponentBuilder builder = new ComponentBuilder();
-
-        for (int i = 0; i < texts.length; i++){
-            TextComponent subComponent = new TextComponent();
-            if (texts[i].equalsIgnoreCase("&")){
-                //get the next string
-                i++;
-                if (texts[i].charAt(0) == '#'){
-                    subComponent.setText(texts[i].substring(7));
-                    subComponent.setColor(net.md_5.bungee.api.ChatColor.of(texts[i].substring(0, 7)));
-                }else{
-                    if (texts[i].length() > 1){
-                        subComponent.setText(texts[i].substring(1));
-                    }else{
-                        subComponent.setText(" ");
-                    }
-
-                    switch (texts[i].charAt(0)){
-                        case '0':
-                            subComponent.setColor(ChatColor.BLACK);
-                            break;
-                        case '1':
-                            subComponent.setColor(ChatColor.DARK_BLUE);
-                            break;
-                        case '2':
-                            subComponent.setColor(ChatColor.DARK_GREEN);
-                            break;
-                        case '3':
-                            subComponent.setColor(ChatColor.DARK_AQUA);
-                            break;
-                        case '4':
-                            subComponent.setColor(ChatColor.DARK_RED);
-                            break;
-                        case '5':
-                            subComponent.setColor(ChatColor.DARK_PURPLE);
-                            break;
-                        case '6':
-                            subComponent.setColor(ChatColor.GOLD);
-                            break;
-                        case '7':
-                            subComponent.setColor(ChatColor.GRAY);
-                            break;
-                        case '8':
-                            subComponent.setColor(ChatColor.DARK_GRAY);
-                            break;
-                        case '9':
-                            subComponent.setColor(ChatColor.BLUE);
-                            break;
-                        case 'a':
-                            subComponent.setColor(ChatColor.GREEN);
-                            break;
-                        case 'b':
-                            subComponent.setColor(ChatColor.AQUA);
-                            break;
-                        case 'c':
-                            subComponent.setColor(ChatColor.RED);
-                            break;
-                        case 'd':
-                            subComponent.setColor(ChatColor.LIGHT_PURPLE);
-                            break;
-                        case 'e':
-                            subComponent.setColor(ChatColor.YELLOW);
-                            break;
-                        case 'f':
-                            subComponent.setColor(ChatColor.WHITE);
-                            break;
-                        case 'k':
-                            subComponent.setObfuscated(true);
-                            break;
-                        case 'l':
-                            subComponent.setBold(true);
-                            break;
-                        case 'm':
-                            subComponent.setStrikethrough(true);
-                            break;
-                        case 'n':
-                            subComponent.setUnderlined(true);
-                            break;
-                        case 'o':
-                            subComponent.setItalic(true);
-                            break;
-                        case 'r':
-                            subComponent.setColor(ChatColor.RESET);
-                            break;
-                    }
-
-                }
-                builder.append(subComponent);
-            }else{
-                builder.append(texts[i]);
-            }
+        for(BaseComponent comp : converted) {
+            base.addExtra(comp);
         }
 
-        return new TextComponent(builder.create());
-
+        return base;
     }
 }
