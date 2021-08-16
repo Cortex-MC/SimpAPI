@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 public class ColorTranslator {
 
     private static final Pattern HEX_PATTERN = Pattern.compile("(&#[0-9a-fA-F]{6})");
+
+    @Deprecated
     public static final String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
 
     /**
