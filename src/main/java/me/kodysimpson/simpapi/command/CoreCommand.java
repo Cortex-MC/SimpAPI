@@ -53,7 +53,7 @@ class CoreCommand extends Command {
     }
 
     @Override
-    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) throws IllegalArgumentException {
         if (args.length == 1){ //prank <subcommand> <args>
             ArrayList<String> subcommandsArguments = new ArrayList<>();
 
