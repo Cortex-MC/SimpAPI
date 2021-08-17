@@ -70,6 +70,38 @@ As you can see, all you need to do is provide the color code after an & as you w
 
 There is also a method for TextComponents called translateColorCodesToTextComponent() which works the same.
 
+### Skull Creator
+****
+
+What the skull creator does should be pretty self-explanatory, here are a few tutorials on how to use it.
+
+#### Creating a skull
+
+ _**Example**_: 1
+```java
+ItemStack playerSkull = SkullCreator.itemFromUuid(player.getUniqueId());
+```
+
+In the example above, we are using the itemFromUuid, this will take in the player's uuid, which will return an ItemStack
+
+ _**Example**_: 2
+```java
+ItemStack playerSkull = SkullCreator.itemFromUuid(player.getName());
+```
+
+Although the example above works, it is not recommended because names are not as accurate as id's.
+
+Keep in mind that when you create a skull,  the default name of said skull will be `{Player name}'s Head`. If you would like to change this to be just the players name, without `'s head`, all you have to do is get the item's meta, and change the display name to the player's display name, simple!:
+
+```java
+ItemStack playerSkull = SkullCreator.itemFromUuid(player.getUniqueId());
+playerSkull.getItemMeta().setDisplayName(
+       player.getDisplayName() 
+    );
+```
+##### Note: 
+
+The skull creator was not created by Kody Simpson, the creator of the [library](https://github.com/deanveloper/SkullCreator/blob/master/src/main/java/dev/dbassett/skullcreator/SkullCreator.java) is [Dean B](https://github.com/deanveloper)
 
 ### Menu Manager
 ****
