@@ -76,6 +76,7 @@ public class PlayerMenuUtility {
      * @return Get the previous menu that was opened for the player
      */
     public Menu lastMenu(){
+        this.history.pop(); //Makes back() work for some reason
         return this.history.pop();
     }
 
