@@ -52,7 +52,14 @@ public class CommandManager {
 
                 //Should this subcommand be treated as an independent command in its own right?
                 if(isQualifiedSubcommand(subcommand)) {
-                    createCoreCommand(plugin, sub.getName(), sub.getDescription(), sub.getSyntax(), commandList, fetchAliasesForSubcommand(subcommand));
+                    createCoreCommand(
+                            plugin,
+                            sub.getName(),
+                            sub.getDescription(),
+                            sub.getSyntax(),
+                            commandList,
+                            fetchAliasesForSubcommand(subcommand)
+                    );
                 }
 
                 return sub;
