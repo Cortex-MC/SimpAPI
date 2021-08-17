@@ -21,6 +21,12 @@ public class CommandManager {
         return clazz.isAnnotationPresent(QualifiedSubCommand.class);
     }
 
+    private static List<String> fetchAliasesForSubcommand(Class<? extends SubCommand> clazz) {
+        if(!isQualifiedSubcommand(clazz)) return Collections.emptyList();
+        QualifiedSubCommand marker = clazz.getAnnotation(QualifiedSubCommand.class);
+        return Arrays.asList(marker.aliases);
+    }
+
     /**
      * @param plugin An instance of your plugin that is using this API. If called within plugin main class, provide this keyword
      * @param commandName The name of the command
@@ -46,7 +52,7 @@ public class CommandManager {
 
                 //Should this subcommand be treated as an independent command in its own right?
                 if(isQualifiedSubcommand(subcommand)) {
-                    createCoreCommand(plugin, sub.getName(), sub.getDescription(), sub.getSyntax(), commandList, sub.getAliases());
+                    createCoreCommand(plugin, sub.getName(), sub.getDescription(), sub.getSyntax(), commandList, fetchAliasesForSubcommand(subcommand));
                 }
 
                 return sub;
