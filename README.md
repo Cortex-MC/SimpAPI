@@ -1,4 +1,18 @@
 # SimpAPI v4.3.2
+
+## Table Of Contents:
+****
+- [Introduction](#introduction)
+- [Installation](#installation)
+  - [Maven](#maven)
+  - [Gradle](#gradle)
+- [Usage](#usage)
+  - [ColorTranslator - Hexadecimal Color Usage](#colortranslator---hexadecimal-color-usage)
+  - [Skull Creator](#skull-creator)
+  - [Menu Manager](#menu-manager)
+  - [Command Manager](#command-manager)
+
+## Introduction
 ****
 SimpAPI, finally a good API that can make coding MC Plugins much easier and less painful.
 This API includes all of my primary utilities like *Menu Manager*, *Command Manager*, *ColorTranslator*, and more.
