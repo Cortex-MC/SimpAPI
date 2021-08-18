@@ -1,5 +1,6 @@
 package me.kodysimpson.simpapi.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -53,22 +54,30 @@ class CoreCommand extends Command {
     }
 
     @Override
-    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) throws IllegalArgumentException {
+    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) throws IllegalArgumentException {
         if (args.length == 1){ //prank <subcommand> <args>
             ArrayList<String> subcommandsArguments = new ArrayList<>();
 
+            //Does the subcommand autocomplete
             for (int i = 0; i < getSubCommands().size(); i++){
                 subcommandsArguments.add(getSubCommands().get(i).getName());
             }
-
             return subcommandsArguments;
         }else if(args.length >= 2){
             for (int i = 0; i < getSubCommands().size(); i++){
                 if (args[0].equalsIgnoreCase(getSubCommands().get(i).getName())){
-                    return getSubCommands().get(i).getSubcommandArguments((Player) sender, args);
+                    List<String> subCommandArgs = getSubCommands().get(i).getSubcommandArguments(
+                            (Player) sender, args
+                    );
+
+                    if(!(subCommandArgs == null))
+                        return subCommandArgs;
+
+                    return Collections.emptyList();
                 }
             }
         }
+
         return Collections.emptyList();
     }
 
