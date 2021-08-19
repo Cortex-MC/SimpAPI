@@ -70,7 +70,8 @@ class CoreCommand extends Command {
                             (Player) sender, args
                     );
 
-                    if(!(subCommandArgs == null))
+                    //getSubcommandArguments will have returned null if no implementation was provided.
+                    if(subCommandArgs != null)
                         return subCommandArgs;
 
                     return Collections.emptyList();
