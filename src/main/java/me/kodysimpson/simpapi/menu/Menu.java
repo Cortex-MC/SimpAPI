@@ -69,7 +69,7 @@ public abstract class Menu implements InventoryHolder {
     }
 
     protected void reloadItems() {
-        for (int i = 0; i < inventory.getSize(); i++){
+        for (int i = 0; i < inventory.getSize(); i++) {
             inventory.setItem(i, null);
         }
         setMenuItems();
@@ -90,9 +90,9 @@ public abstract class Menu implements InventoryHolder {
      * This will fill all of the empty slots with "filler glass"
      */
     //Helpful utility method to fill all remaining slots with "filler glass"
-    public void setFillerGlass(){
+    public void setFillerGlass() {
         for (int i = 0; i < getSlots(); i++) {
-            if (inventory.getItem(i) == null){
+            if (inventory.getItem(i) == null) {
                 inventory.setItem(i, FILLER_GLASS);
             }
         }
@@ -103,16 +103,16 @@ public abstract class Menu implements InventoryHolder {
      */
     public void setFillerGlass(ItemStack itemStack) {
         for (int i = 0; i < getSlots(); i++) {
-            if (inventory.getItem(i) == null){
+            if (inventory.getItem(i) == null) {
                 inventory.setItem(i, itemStack);
             }
         }
     }
 
     /**
-     * @param material The material to base the ItemStack on
+     * @param material    The material to base the ItemStack on
      * @param displayName The display name of the ItemStack
-     * @param lore The lore of the ItemStack, with the Strings being automatically color coded with ColorTranslator
+     * @param lore        The lore of the ItemStack, with the Strings being automatically color coded with ColorTranslator
      * @return The constructed ItemStack object
      */
     public ItemStack makeItem(Material material, String displayName, String... lore) {

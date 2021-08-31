@@ -27,7 +27,7 @@ public class MenuManager {
         boolean isAlreadyRegistered = false;
         for (RegisteredListener rl : InventoryClickEvent.getHandlerList().getRegisteredListeners()) {
             System.out.println(rl.getListener().getClass().getSimpleName());
-            if (rl.getListener() instanceof MenuListener){
+            if (rl.getListener() instanceof MenuListener) {
                 isAlreadyRegistered = true;
                 break;
             }
@@ -44,7 +44,7 @@ public class MenuManager {
 //                });
 
         //System.out.println("erwiwjriwer: " + isAlreadyRegistered);
-        if (!isAlreadyRegistered){
+        if (!isAlreadyRegistered) {
             server.getPluginManager().registerEvents(new MenuListener(), plugin);
         }
 
@@ -72,7 +72,7 @@ public class MenuManager {
 
     /**
      * @param menuClass The class reference of the Menu you want to open for a player
-     * @param player The player to open the menu for
+     * @param player    The player to open the menu for
      * @throws MenuManagerNotSetupException Thrown if the setup() method has not been called and used properly
      */
     public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
@@ -100,7 +100,7 @@ public class MenuManager {
 
     public static PlayerMenuUtility getPlayerMenuUtility(Player p) throws MenuManagerException, MenuManagerNotSetupException {
 
-        if (!isSetup){
+        if (!isSetup) {
             throw new MenuManagerNotSetupException();
         }
 

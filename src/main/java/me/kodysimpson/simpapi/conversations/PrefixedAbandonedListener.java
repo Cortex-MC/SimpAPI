@@ -23,6 +23,10 @@ final class PrefixedAbandonedListener implements ConversationAbandonedListener {
         this.prefix = prefix;
     }
 
+    private static String tl(String msg) {
+        return ColorTranslator.translateColorCodes(msg);
+    }
+
     @Override
     public void conversationAbandoned(ConversationAbandonedEvent abandonedEvent) {
         if (abandonedEvent.gracefulExit()) return;
@@ -52,10 +56,6 @@ final class PrefixedAbandonedListener implements ConversationAbandonedListener {
 
         //Unknown canceller
         player.sendMessage(tl(prefix + "&9Conversation cancelled by &#FF00FFcosmic energy&9."));
-    }
-
-    private static String tl(String msg) {
-        return ColorTranslator.translateColorCodes(msg);
     }
 
 }
