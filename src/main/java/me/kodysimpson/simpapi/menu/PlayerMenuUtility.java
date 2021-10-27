@@ -28,13 +28,13 @@ public class PlayerMenuUtility {
 
     /**
      * @param identifier A key to store the data by
-     * @param data The data itself to be stored
+     * @param data       The data itself to be stored
      */
-    public void setData(String identifier, Object data){
+    public void setData(String identifier, Object data) {
         this.dataMap.put(identifier, data);
     }
 
-    public void setData(Enum identifier, Object data){
+    public void setData(Enum identifier, Object data) {
         this.dataMap.put(identifier.toString(), data);
     }
 
@@ -42,32 +42,32 @@ public class PlayerMenuUtility {
      * @param identifier The key for the data stored in the PMC
      * @return The retrieved value or null if not found
      */
-    public Object getData(String identifier){
+    public Object getData(String identifier) {
         return this.dataMap.get(identifier);
     }
 
-    public Object getData(Enum identifier){
+    public Object getData(Enum identifier) {
         return this.dataMap.get(identifier.toString());
     }
 
-    public <T> T getData(String identifier, Class<T> classRef){
+    public <T> T getData(String identifier, Class<T> classRef) {
 
         Object obj = this.dataMap.get(identifier);
 
-        if (obj == null){
+        if (obj == null) {
             return null;
-        }else{
+        } else {
             return classRef.cast(obj);
         }
     }
 
-    public <T> T getData(Enum identifier, Class<T> classRef){
+    public <T> T getData(Enum identifier, Class<T> classRef) {
 
         Object obj = this.dataMap.get(identifier.toString());
 
-        if (obj == null){
+        if (obj == null) {
             return null;
-        }else{
+        } else {
             return classRef.cast(obj);
         }
     }
@@ -75,12 +75,12 @@ public class PlayerMenuUtility {
     /**
      * @return Get the previous menu that was opened for the player
      */
-    public Menu lastMenu(){
+    public Menu lastMenu() {
         this.history.pop(); //Makes back() work for some reason
         return this.history.pop();
     }
 
-    public void pushMenu(Menu menu){
+    public void pushMenu(Menu menu) {
         this.history.push(menu);
     }
 

@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * A library for the Bukkit API to create player skulls
  * from names, base64 strings, and texture URLs.
- *
+ * <p>
  * Does not use any NMS code, and should work across all versions.
  *
  * @author Dean B on 12/28/2016.
@@ -28,7 +28,6 @@ public class SkullCreator {
      *
      * @param name The Player's name
      * @return The head of the Player
-     *
      * @deprecated names don't make for good identifiers
      */
     @Deprecated
@@ -44,7 +43,6 @@ public class SkullCreator {
      * @param item The item to apply the name to
      * @param name The Player's name
      * @return The head of the Player
-     *
      * @deprecated names don't make for good identifiers
      */
     @Deprecated
@@ -73,7 +71,7 @@ public class SkullCreator {
      * Creates a player skull based on a UUID. 1.13 only.
      *
      * @param item The item to apply the name to
-     * @param id The Player's UUID
+     * @param id   The Player's UUID
      * @return The head of the Player
      */
     public static ItemStack itemWithUuid(ItemStack item, UUID id) {
@@ -104,7 +102,7 @@ public class SkullCreator {
      * Creates a player skull based on a Mojang server URL.
      *
      * @param item The item to apply the skin to
-     * @param url The URL of the Mojang skin
+     * @param url  The URL of the Mojang skin
      * @return The head associated with the URL
      */
     public static ItemStack itemWithUrl(ItemStack item, String url) {
@@ -128,7 +126,7 @@ public class SkullCreator {
     /**
      * Applies the base64 string to the ItemStack.
      *
-     * @param item The ItemStack to put the base64 onto
+     * @param item   The ItemStack to put the base64 onto
      * @param base64 The base64 string containing the texture
      * @return The head with a custom texture
      */
@@ -146,8 +144,7 @@ public class SkullCreator {
      * Sets the block to a skull with the given name.
      *
      * @param block The block to set
-     * @param name The player to set it to
-     *
+     * @param name  The player to set it to
      * @deprecated names don't make for good identifiers
      */
     @Deprecated
@@ -163,7 +160,7 @@ public class SkullCreator {
      * Sets the block to a skull with the given UUID.
      *
      * @param block The block to set
-     * @param id The player to set it to
+     * @param id    The player to set it to
      */
     public static void blockWithUuid(Block block, UUID id) {
         notNull(block, "block");
@@ -177,7 +174,7 @@ public class SkullCreator {
      * Sets the block to a skull with the given UUID.
      *
      * @param block The block to set
-     * @param url The mojang URL to set it to use
+     * @param url   The mojang URL to set it to use
      */
     public static void blockWithUrl(Block block, String url) {
         notNull(block, "block");
@@ -189,7 +186,7 @@ public class SkullCreator {
     /**
      * Sets the block to a skull with the given UUID.
      *
-     * @param block The block to set
+     * @param block  The block to set
      * @param base64 The base64 to set it to use
      */
     public static void blockWithBase64(Block block, String base64) {
@@ -209,7 +206,7 @@ public class SkullCreator {
         if (newerApi()) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "data merge block " + args);
         } else {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"blockdata " + args);
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockdata " + args);
         }
     }
 
@@ -254,7 +251,7 @@ public class SkullCreator {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        String toEncode = "{\"textures\":{\"SKIN\":{\"url\":\"" + actualUrl.toString() + "\"}}}";
+        String toEncode = "{\"textures\":{\"SKIN\":{\"url\":\"" + actualUrl + "\"}}}";
         return Base64.getEncoder().encodeToString(toEncode.getBytes());
     }
 }

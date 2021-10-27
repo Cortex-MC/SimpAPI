@@ -1,4 +1,4 @@
 package me.kodysimpson.simpapi.exceptions;
 
-public class MenuManagerNotSetupException extends Exception{
+public class MenuManagerNotSetupException extends Exception {
 }

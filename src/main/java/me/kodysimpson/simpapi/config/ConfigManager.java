@@ -16,16 +16,12 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ConfigManager {
 
-    private PrettyPrinter prettyPrinter = null;
-
-    public enum FileType{
-        JSON, YAML
-    }
+    private final PrettyPrinter prettyPrinter = null;
 
     /**
-     * @param plugin An instance of your plugin
+     * @param plugin      An instance of your plugin
      * @param configClass A class reference to a Java class annotated with @Config containing your config values
-     * @param <T> The generic type of the Config class
+     * @param <T>         The generic type of the Config class
      * @return A new instance of the Config class to be used throughout your plugin
      */
     public static <T> T loadConfig(JavaPlugin plugin, Class<T> configClass) {
@@ -37,7 +33,7 @@ public class ConfigManager {
         if (configAnnotation == null) {
             plugin.getLogger().severe("The provided Configuration Java class was not annotated properly with @Config from SimpAPI. Therefore the config could not be loaded.");
             plugin.getPluginLoader().disablePlugin(plugin);
-        }else{
+        } else {
 
             String fileName = configAnnotation.fileName();
             FileType fileType = configAnnotation.fileType();
@@ -45,7 +41,7 @@ public class ConfigManager {
             File messagesConfigFile = getConfigFile(plugin, fileName, fileType);
             ObjectMapper mapper = getObjectMapper(fileType);
 
-            if (!messagesConfigFile.exists()){
+            if (!messagesConfigFile.exists()) {
                 try {
                     config = configClass.getConstructor().newInstance();
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -57,7 +53,7 @@ public class ConfigManager {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }else{
+            } else {
                 //since it exists already, load the values into the object
                 try {
                     plugin.getLogger().info("Attempting to read " + fileName + " config file.");
@@ -75,16 +71,16 @@ public class ConfigManager {
     }
 
     /**
-     * @param plugin Your plugin class
+     * @param plugin       Your plugin class
      * @param configObject An instance of your Config class to use to save the contents of it to file
      */
     public static void saveConfig(JavaPlugin plugin, Object configObject) {
 
         Config configAnnotation = configObject.getClass().getAnnotation(Config.class);
-        if (configAnnotation == null){
+        if (configAnnotation == null) {
             plugin.getLogger().severe("The provided Configuration Java class was not annotated properly with @Config from SimpAPI. Therefore the config could not be saved.");
             plugin.getPluginLoader().disablePlugin(plugin);
-        }else{
+        } else {
 
             String fileName = configAnnotation.fileName();
             FileType fileType = configAnnotation.fileType();
@@ -103,7 +99,7 @@ public class ConfigManager {
 
     }
 
-    private static File getConfigFile(JavaPlugin plugin, String fileName, FileType fileType){
+    private static File getConfigFile(JavaPlugin plugin, String fileName, FileType fileType) {
         switch (fileType) {
             case YAML:
                 return new File(plugin.getDataFolder(), fileName + ".yml");
@@ -115,11 +111,15 @@ public class ConfigManager {
     }
 
     private static ObjectMapper getObjectMapper(FileType fileType) {
-        if (fileType == FileType.YAML){
+        if (fileType == FileType.YAML) {
             return new ObjectMapper(new YAMLFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        }else{
+        } else {
             return new ObjectMapper(new JsonFactory()).configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true).configure(JsonParser.Feature.IGNORE_UNDEFINED, true).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).setDefaultPrettyPrinter(new DefaultPrettyPrinter());
         }
+    }
+
+    public enum FileType {
+        JSON, YAML
     }
 
 }

@@ -16,8 +16,8 @@ import java.util.Map;
  * Wraps {@link ConversationFactory} to make building conversations with players
  * significantly less tedious and boiler-plate prone.
  *
- * @see ConversationOptions
  * @author muunitnocQ
+ * @see ConversationOptions
  */
 public final class ConversationStarter {
 
@@ -83,12 +83,12 @@ public final class ConversationStarter {
          * @see ColorTranslator#translateColorCodes(String)
          */
         public final ConversationPrefix prefix;
-        private final String rawPrefix;
         public final boolean localEcho;
         public final boolean modal;
         public final int timeOut;
         public final boolean escapeWordsCaseSensitive;
         public final String[] escapeWords;
+        private final String rawPrefix;
 
         /**
          * Describes all options a conversation can have.

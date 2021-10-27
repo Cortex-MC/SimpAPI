@@ -45,7 +45,7 @@ public abstract class PaginatedMenu extends Menu {
     /**
      * Set the border and menu buttons for the menu. Override this method to provide a custom menu border or specify custom items in customMenuBorderItems()
      */
-    protected void addMenuBorder(){
+    protected void addMenuBorder() {
 
         inventory.setItem(48, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Left"));
         inventory.setItem(49, makeItem(Material.BARRIER, ChatColor.DARK_RED + "Close"));
@@ -71,7 +71,7 @@ public abstract class PaginatedMenu extends Menu {
         }
 
         //place the custom items if they exist
-        if (getCustomMenuBorderItems() != null){
+        if (getCustomMenuBorderItems() != null) {
             getCustomMenuBorderItems().forEach((integer, itemStack) -> inventory.setItem(integer, itemStack));
         }
 
@@ -104,10 +104,10 @@ public abstract class PaginatedMenu extends Menu {
     /**
      * @return true if successful, false if already on the first page
      */
-    public boolean prevPage(){
-        if (page == 0){
+    public boolean prevPage() {
+        if (page == 0) {
             return false;
-        }else{
+        } else {
             page = page - 1;
             reloadItems();
             return true;
@@ -117,7 +117,7 @@ public abstract class PaginatedMenu extends Menu {
     /**
      * @return true if successful, false if already on the last page
      */
-    public boolean nextPage(){
+    public boolean nextPage() {
         if (!((index + 1) >= getData().size())) {
             page = page + 1;
             reloadItems();
