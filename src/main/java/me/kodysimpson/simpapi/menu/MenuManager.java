@@ -62,7 +62,6 @@ public class MenuManager {
      */
     public static void setup(Server server, Plugin plugin) {
 
-        System.out.println("MENU MANAGER HAS BEEN SETUP");
 
         registerMenuListener(server, plugin);
         //registerPlayerMenuUtility(playerMenuUtilityClass);
