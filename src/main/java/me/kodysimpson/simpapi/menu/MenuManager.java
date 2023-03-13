@@ -26,7 +26,6 @@ public class MenuManager {
 
         boolean isAlreadyRegistered = false;
         for (RegisteredListener rl : InventoryClickEvent.getHandlerList().getRegisteredListeners()) {
-            System.out.println(rl.getListener().getClass().getSimpleName());
             if (rl.getListener() instanceof MenuListener) {
                 isAlreadyRegistered = true;
                 break;
