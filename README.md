@@ -27,12 +27,10 @@ JavaDocs: https://kodysimpson.github.io/SimpAPI/index.html
 
 #### Repository
 ```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
 ```
 #### Dependency
 ```xml
