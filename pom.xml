@@ -6,13 +6,13 @@
 
     <groupId>me.kodysimpson</groupId>
     <artifactId>SimpAPI</artifactId>
-    <version>4.4.0</version>
+    <version>4.5.0</version>
     <packaging>jar</packaging>
 
     <name>SimpAPI</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
