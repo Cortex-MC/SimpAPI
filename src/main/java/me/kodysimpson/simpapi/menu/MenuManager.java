@@ -51,9 +51,9 @@ public class MenuManager {
      * @param player    The player to open the menu for
      * @throws MenuManagerNotSetupException Thrown if the setup() method has not been called and used properly
      */
-    public static void openMenu(Class<? extends Menu> menuClass, Plugin plugin, Player player) throws MenuManagerException, MenuManagerNotSetupException {
+    public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
         try {
-            menuClass.getConstructor(Plugin.class, PlayerMenuUtility.class).newInstance(plugin, getPlayerMenuUtility(player)).open();
+            menuClass.getConstructor(Plugin.class, PlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MenuManagerException();
         }

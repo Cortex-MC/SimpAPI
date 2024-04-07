@@ -11,7 +11,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -27,13 +26,11 @@ public abstract class Menu implements InventoryHolder {
     protected Player p;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
-    protected Plugin plugin;
 
     //Constructor for Menu. Pass in a PlayerMenuUtility so that
     // we have information on who's menu this is and
     // what info is to be transferred
-    public Menu(Plugin plugin, PlayerMenuUtility playerMenuUtility) {
-        this.plugin = plugin;
+    public Menu(PlayerMenuUtility playerMenuUtility) {
         this.playerMenuUtility = playerMenuUtility;
         this.p = playerMenuUtility.getOwner();
     }
@@ -68,7 +65,7 @@ public abstract class Menu implements InventoryHolder {
     }
 
     public void back() throws MenuManagerException, MenuManagerNotSetupException {
-        MenuManager.openMenu(playerMenuUtility.lastMenu().getClass(), plugin, playerMenuUtility.getOwner());
+        MenuManager.openMenu(playerMenuUtility.lastMenu().getClass(), playerMenuUtility.getOwner());
     }
 
     protected void reloadItems() {
@@ -80,7 +77,7 @@ public abstract class Menu implements InventoryHolder {
 
     protected void reload() throws MenuManagerException, MenuManagerNotSetupException {
         p.closeInventory();
-        MenuManager.openMenu(this.getClass(), plugin, p);
+        MenuManager.openMenu(this.getClass(), p);
     }
 
     //Overridden method from the InventoryHolder interface
@@ -90,7 +87,7 @@ public abstract class Menu implements InventoryHolder {
     }
 
     /**
-     * This will fill all of the empty slots with "filler glass"
+     * This will fill all the empty slots with "filler glass"
      */
     //Helpful utility method to fill all remaining slots with "filler glass"
     public void setFillerGlass() {

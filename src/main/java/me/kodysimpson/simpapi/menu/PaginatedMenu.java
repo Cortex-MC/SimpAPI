@@ -24,7 +24,7 @@ public abstract class PaginatedMenu extends Menu {
     protected int index = 0;
 
     public PaginatedMenu(Plugin plugin, PlayerMenuUtility playerMenuUtility) {
-        super(plugin, playerMenuUtility);
+        super(playerMenuUtility);
     }
 
     /**
