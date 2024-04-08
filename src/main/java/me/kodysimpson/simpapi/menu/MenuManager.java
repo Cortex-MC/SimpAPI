@@ -53,7 +53,7 @@ public class MenuManager {
      */
     public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
         try {
-            menuClass.getConstructor(Plugin.class, PlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
+            menuClass.getConstructor(PlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MenuManagerException();
         }
