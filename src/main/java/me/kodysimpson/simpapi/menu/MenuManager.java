@@ -54,8 +54,14 @@ public class MenuManager {
     public static void openMenu(Class<? extends Menu> menuClass, Player player) throws MenuManagerException, MenuManagerNotSetupException {
         try {
             menuClass.getConstructor(PlayerMenuUtility.class).newInstance(getPlayerMenuUtility(player)).open();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new MenuManagerException();
+        } catch (InstantiationException e) {
+            throw new MenuManagerException("Failed to instantiate menu class", e);
+        } catch (IllegalAccessException e) {
+            throw new MenuManagerException("Illegal access while trying to instantiate menu class", e);
+        } catch (InvocationTargetException e) {
+            throw new MenuManagerException("An error occurred while trying to invoke the menu class constructor", e);
+        } catch (NoSuchMethodException e) {
+            throw new MenuManagerException("The menu class constructor could not be found", e);
         }
     }
 
