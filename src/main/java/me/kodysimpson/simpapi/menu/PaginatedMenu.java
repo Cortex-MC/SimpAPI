@@ -23,7 +23,7 @@ public abstract class PaginatedMenu extends Menu {
     //that the loop is on
     protected int index = 0;
 
-    public PaginatedMenu(Plugin plugin, PlayerMenuUtility playerMenuUtility) {
+    public PaginatedMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
     }
 

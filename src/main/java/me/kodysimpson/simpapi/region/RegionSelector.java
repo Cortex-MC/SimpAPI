@@ -28,7 +28,7 @@ public class RegionSelector {
         }
     }
 
-    public void killAllSelectors() {
+    public static void killAllSelectors() {
         for (World world : getServer().getWorlds()) {
             for (Entity entity : world.getEntities()) {
                 for (String tag : entity.getScoreboardTags()) {
@@ -41,7 +41,7 @@ public class RegionSelector {
         }
     }
 
-    public void removeTempTeams() {
+    public static void removeTempTeams() {
         Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
         for (Team team : board.getTeams()) {
             if (team.getName().startsWith("regionselector+")) {
