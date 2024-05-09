@@ -23,16 +23,16 @@ public abstract class Menu implements InventoryHolder {
 
     //Protected values that can be accessed in the menus
     protected PlayerMenuUtility playerMenuUtility;
-    protected Player p;
+    protected Player player;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
 
     //Constructor for Menu. Pass in a PlayerMenuUtility so that
-    // we have information on who's menu this is and
+    // we have information on whose menu this is and
     // what info is to be transferred
     public Menu(PlayerMenuUtility playerMenuUtility) {
         this.playerMenuUtility = playerMenuUtility;
-        this.p = playerMenuUtility.getOwner();
+        this.player = playerMenuUtility.getOwner();
     }
 
     //let each menu decide their name
@@ -76,8 +76,8 @@ public abstract class Menu implements InventoryHolder {
     }
 
     protected void reload() throws MenuManagerException, MenuManagerNotSetupException {
-        p.closeInventory();
-        MenuManager.openMenu(this.getClass(), p);
+        player.closeInventory();
+        MenuManager.openMenu(this.getClass(), player);
     }
 
     //Overridden method from the InventoryHolder interface

@@ -3,7 +3,6 @@ package me.kodysimpson.simpapi.menu;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -19,23 +18,16 @@ public abstract class PaginatedMenu extends Menu {
     //28 is max items because with the border set below,
     //28 empty slots are remaining.
     protected int maxItemsPerPage = 28;
-    //the index represents the index of the slot
-    //that the loop is on
-    protected int index = 0;
 
     public PaginatedMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
     }
 
     /**
-     * @return A list of the data being paginated. usually this is a list of items but it can be anything
+     * @return A list of ItemStacks that you want to be placed in the menu. This is the data that will be paginated
+     * You can also use this as a way to convert your data to items if you need to
      */
-    public abstract List<?> getData();
-
-    /**
-     * @param object A single element of the data list that you do something with. It is recommended that you turn this into an item if it is not already and then put it into the inventory as you would with a normal Menu. You can execute any other logic in here as well.
-     */
-    public abstract void loopCode(Object object);
+    public abstract List<ItemStack> dataToItems();
 
     /**
      * @return A hashmap of items you want to be placed in the paginated menu border. This will override any items already placed by default. Key = slot, Value = Item
@@ -86,19 +78,13 @@ public abstract class PaginatedMenu extends Menu {
 
         addMenuBorder();
 
-        List<Object> data = (List<Object>) getData();
-
-        if (data != null && !data.isEmpty()) {
-            for (int i = 0; i < getMaxItemsPerPage(); i++) {
-                index = getMaxItemsPerPage() * page + i;
-                System.out.println(index);
-                if (index >= data.size()) break;
-                if (data.get(index) != null) {
-                    loopCode(data.get(index)); //run the code defined by the user
-                }
-            }
+        //add the items to the inventory based on the current page and max items per page
+        List<ItemStack> items = dataToItems();
+        for (int i = 0; i < maxItemsPerPage; i++) {
+            int index = maxItemsPerPage * page + i;
+            if (index >= items.size()) break;
+            inventory.addItem(items.get(index));
         }
-
 
     }
 
@@ -119,7 +105,7 @@ public abstract class PaginatedMenu extends Menu {
      * @return true if successful, false if already on the last page
      */
     public boolean nextPage() {
-        if (!((index + 1) >= getData().size())) {
+        if (!((page + 1) * maxItemsPerPage >= dataToItems().size())) {
             page = page + 1;
             reloadItems();
             return true;
