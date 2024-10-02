@@ -1,5 +1,6 @@
 package io.myzticbean.mcdevtools.command;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * An Advanced Command-Managing system allowing you to register subcommands under a core command.
  */
+@UtilityClass
 public class CommandManager {
 
     /**

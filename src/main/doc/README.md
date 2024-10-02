@@ -1,4 +1,4 @@
-# MC Dev Tools v1.0.1-alpha
+# MC Dev Tools v${project.version}
 
 **Note:** This is a fork of the amazing [SimpAPI](https://github.com/Cortex-MC/SimpAPI?tab=readme-ov-file), but now with some essential feature enhancements and code optimizations. 
 
@@ -39,7 +39,7 @@ Video Showcase: https://youtu.be/kKaIf7EkCWg
 <dependency>
     <groupId>com.github.myzticbean</groupId>
     <artifactId>MCDevTools</artifactId>
-    <version>1.0.1-alpha</version>
+    <version>${project.version}</version>
 </dependency>
 ```
 
@@ -65,7 +65,7 @@ repositories {
 Groovy/Kotlin:
 ```groovy
 dependencies {
-    implementation 'com.github.myzticbean:MCDevTools:1.0.1-alpha'
+    implementation 'com.github.myzticbean:MCDevTools:${project.version}'
 }
 ```
 

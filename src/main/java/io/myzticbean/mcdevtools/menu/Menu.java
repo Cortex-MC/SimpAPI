@@ -1,8 +1,8 @@
 package io.myzticbean.mcdevtools.menu;
 
-import io.myzticbean.mcdevtools.colors.ColorTranslator;
 import io.myzticbean.mcdevtools.exceptions.MenuManagerException;
 import io.myzticbean.mcdevtools.exceptions.MenuManagerNotSetupException;
+import io.myzticbean.mcdevtools.items.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,11 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /*
     Defines the behavior and attributes of all menus in our plugin
@@ -116,17 +112,7 @@ public abstract class Menu implements InventoryHolder {
      * @return The constructed ItemStack object
      */
     public ItemStack makeItem(Material material, String displayName, String... lore) {
-
-        ItemStack item = new ItemStack(material);
-        ItemMeta itemMeta = item.getItemMeta();
-        assert itemMeta != null;
-        itemMeta.setDisplayName(displayName);
-
-        //Automatically translate color codes provided
-        itemMeta.setLore(Arrays.stream(lore).map(ColorTranslator::translateColorCodes).collect(Collectors.toList()));
-        item.setItemMeta(itemMeta);
-
-        return item;
+        return ItemUtils.makeItem(material, displayName, lore);
     }
 
 }
