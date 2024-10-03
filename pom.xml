@@ -70,6 +70,18 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <!-- Below path is where your plugin jar will be copied automatically upon build, comment out if on a Mac -->
+                    <!--<outputDirectory>D:\${user.name}\MCServers\MCServer_1.20.1\plugins</outputDirectory>-->
+                    <!-- Comment out if on a PC -->
+                    <outputDirectory>/Users/${user.name}/IdeaProjects/ItemMagnet/lib</outputDirectory>
+                    <outputDirectory>/Users/${user.name}/IdeaProjects/MCServer_1.21/plugins</outputDirectory>
+                </configuration>
+            </plugin>
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-javadoc-plugin</artifactId>-->

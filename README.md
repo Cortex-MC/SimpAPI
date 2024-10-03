@@ -13,6 +13,7 @@
   - [Skull Creator](#skull-creator)
   - [Menu Manager](#menu-manager)
   - [Command Manager](#command-manager)
+  - [Auto Register Bukkit Events](#auto-register-bukkit-events)
 
 ## Introduction
 ****
@@ -254,3 +255,52 @@ These enumerators can be passed into the PMC instead of a String key, they will 
 
 ## Command Manager
 *Video*: https://youtu.be/NFYg9Tmk-vo
+
+## Auto Register Bukkit Events
+Rather than registering each and every event handler in your plugin one by one, just annotate your Event Handler classes with `@RegisterEventHandler`:
+```java
+@RegisterEventHandler   // Add this annotation on top of your event handler class
+public class PlayerMoveListener implements Listener {
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        event.getPlayer().sendMessage("Hey!");
+    }
+}
+```
+In your main class, you can either specify which package to look into for registering all event handlers:
+```java
+public final class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        // Plugin startup logic
+        EventRegistrar.registerEvents(this, "io.myzticbean.mypluginname.listeners");
+        Logger.info("Plugin has been enabled!");
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+        Logger.info("Plugin has been disabled!");
+    }
+}
+```
+Or, you can choose to let it search through all of your classes to find event handlers and register them with Bukkit:
+```java
+public final class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        // Plugin startup logic
+        EventRegistrar.registerEvents(this);
+        Logger.info("ItemMagnet has been enabled!");
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+        Logger.info("ItemMagnet has been disabled!");
+    }
+}
+```
+**Note:** This can be a bit performance intensive if your project has large number of classes.
