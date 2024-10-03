@@ -1,4 +1,4 @@
-name: MCDevTools
+name: SimpAPI
 version: ${project.version}
-main: io.myzticbean.mcdevtools.MCDevTools
+main: me.kodysimpson.simpapi.SimpAPI
 api-version: 1.16

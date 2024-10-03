@@ -1,20 +1,14 @@
 package io.myzticbean.mcdevtools.heads;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import io.myzticbean.mcdevtools.log.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.profile.PlayerProfile;
-import org.bukkit.profile.PlayerTextures;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
@@ -146,27 +140,6 @@ public class SkullCreator {
         );
     }
 
-    public static ItemStack createPlayerHead(String textureValue) {
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta meta = (SkullMeta) head.getItemMeta();
-        if (meta != null) {
-            PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID(), null);
-            PlayerTextures textures = profile.getTextures();
-            try {
-                String decodedValue = new String(Base64.getDecoder().decode(textureValue));
-                String textureUrl = extractTextureUrl(decodedValue);
-                URL url = new URL(textureUrl);
-                textures.setSkin(url);
-            } catch (Exception e) {
-                Logger.error(e.getMessage(), e);
-            }
-            profile.setTextures(textures);
-            meta.setOwnerProfile(profile);
-            head.setItemMeta(meta);
-        }
-        return head;
-    }
-
     /**
      * Sets the block to a skull with the given name.
      *
@@ -235,16 +208,6 @@ public class SkullCreator {
         } else {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockdata " + args);
         }
-    }
-
-    private static String extractTextureUrl(String decodedValue) {
-        var gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(decodedValue, JsonObject.class);
-        return jsonObject
-                .getAsJsonObject("textures")
-                .getAsJsonObject("SKIN")
-                .get("url")
-                .getAsString();
     }
 
     private static boolean newerApi() {

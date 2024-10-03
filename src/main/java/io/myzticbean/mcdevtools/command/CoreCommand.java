@@ -24,7 +24,7 @@ class CoreCommand extends Command {
         this.commandList = commandList;
     }
 
-    public List<SubCommand> getSubCommands() {
+    public ArrayList<SubCommand> getSubCommands() {
         return subcommands;
     }
 
@@ -57,7 +57,7 @@ class CoreCommand extends Command {
         if (args.length == 1) { //prank <subcommand> <args>
             ArrayList<String> subcommandsArguments = new ArrayList<>();
 
-            // Does the subcommand autocomplete
+            //Does the subcommand autocomplete
             for (int i = 0; i < getSubCommands().size(); i++) {
                 subcommandsArguments.add(getSubCommands().get(i).getName());
             }
@@ -69,7 +69,7 @@ class CoreCommand extends Command {
                             (Player) sender, args
                     );
 
-                    // getSubcommandArguments will have returned null if no implementation was provided.
+                    //getSubcommandArguments will have returned null if no implementation was provided.
                     if (subCommandArgs != null)
                         return subCommandArgs;
 
