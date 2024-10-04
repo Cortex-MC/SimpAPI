@@ -6,7 +6,7 @@
 
     <groupId>io.myzticbean</groupId>
     <artifactId>MCDevTools</artifactId>
-    <version>1.0.2-alpha</version>
+    <version>1.0.3-alpha</version>
     <packaging>jar</packaging>
     <name>MCDevTools</name>
     <properties>

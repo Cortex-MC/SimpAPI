@@ -1,8 +1,9 @@
-# MC Dev Tools v${project.version}
+# Minecraft Developer Tools 
+## v${project.version}
 
-**Note:** This is a fork of the amazing [SimpAPI](https://github.com/Cortex-MC/SimpAPI?tab=readme-ov-file), but now with some essential feature enhancements and code optimizations. 
+**Note:** This is a fork of the amazing [SimpAPI](https://github.com/Cortex-MC/SimpAPI?tab=readme-ov-file), with some essential feature enhancements and code optimizations. 
 
-## Table Of Contents:
+## Table of Contents:
 ****
 - [Introduction](#introduction)
 - [Installation](#installation)
@@ -69,7 +70,7 @@ dependencies {
     implementation 'com.github.myzticbean:MCDevTools:${project.version}'
 }
 ```
-
+([Back to top](#table-of-contents))
 ## Usage
 
 ### ColorTranslator - Hexadecimal Color Usage
@@ -85,6 +86,7 @@ As you can see, all you need to do is provide the color code after an & as you w
 
 There is also a method for TextComponents called translateColorCodesToTextComponent() which works the same.
 
+([Back to top](#table-of-contents))
 ### Skull Creator
 ****
 
@@ -111,13 +113,12 @@ Keep in mind that when you create a skull,  the default name of said skull will 
 ```java
 ItemStack playerSkull = SkullCreator.itemFromUuid(player.getUniqueId());
 playerSkull.getItemMeta().setDisplayName(
-       player.getDisplayName() 
-    );
+   player.getDisplayName() 
+);
 ```
-##### Note: 
+**Note:** The skull creator was not created by Kody Simpson, the creator of the [library](https://github.com/deanveloper/SkullCreator/blob/master/src/main/java/dev/dbassett/skullcreator/SkullCreator.java) is [Dean B](https://github.com/deanveloper)
 
-The skull creator was not created by Kody Simpson, the creator of the [library](https://github.com/deanveloper/SkullCreator/blob/master/src/main/java/dev/dbassett/skullcreator/SkullCreator.java) is [Dean B](https://github.com/deanveloper)
-
+([Back to top](#table-of-contents))
 ### Menu Manager
 ****
 The Menu Manager is something I came up with a while ago and showed on my Youtube channel, but in the SimpAPI it is much more advanced and has been made much easier for the developers who use it.
@@ -125,14 +126,13 @@ The Menu Manager is something I came up with a while ago and showed on my Youtub
 **Step One**: Setup and Initializise the MenuManager by calling the Setup method. Do this in the plugin's onEnable method and all you need to do is provide the PlayerMenuUtility you just created.
 
 ```java
-    @Override
-    public void onEnable() {
-        // Plugin startup logic
+@Override
+public void onEnable() {
+    // Plugin startup logic
 
-        //Setup and register the MenuManager. It will take care of the annoying parts.
-        MenuManager.setup(getServer(), this);
-
-    }
+    //Setup and register the MenuManager. It will take care of the annoying parts.
+    MenuManager.setup(getServer(), this);
+}
 ```
 
 **Step Two**: Add Menus. 
@@ -201,46 +201,44 @@ and then provide an instance of the player to open it for.
 
 **Storing Data in the PlayerMenuUtility to be passed between Menus:**
 ```java
-        @Override
-        public void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException {
+@Override
+public void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException {
 
-            switch (e.getCurrentItem().getType()){
-                case PLAYER_HEAD:
-        
-                    Player target = Bukkit.getPlayer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
-            
-                    playerMenuUtility.setData("playerToFreeze", target);
-            
-                    MenuManager.openMenu(ConfirmFreezeMenu.class, playerMenuUtility.getOwner());
+    switch (e.getCurrentItem().getType()){
+        case PLAYER_HEAD:
+
+            Player target = Bukkit.getPlayer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
     
-                    break;
-            }
+            playerMenuUtility.setData("playerToFreeze", target);
+    
+            MenuManager.openMenu(ConfirmFreezeMenu.class, playerMenuUtility.getOwner());
 
-        }
+            break;
+    }
+}
 ```
 
 **Retrieving Data from the PlayerMenuUtility:**
 ```java
-    @Override
-    public void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException {
+@Override
+public void handleMenu(InventoryClickEvent e) throws MenuManagerNotSetupException, MenuManagerException {
 
-        switch (e.getCurrentItem().getType()){
-            case GREEN_BANNER:
+    switch (e.getCurrentItem().getType()){
+        case GREEN_BANNER:
 
-                Player target = playerMenuUtility.getData("playerToFreeze", Player.class);
+            Player target = playerMenuUtility.getData("playerToFreeze", Player.class);
 
-                playerMenuUtility.getOwner().closeInventory();
-                playerMenuUtility.getOwner().sendMessage(target.getDisplayName() + " has been frozen.");
+            playerMenuUtility.getOwner().closeInventory();
+            playerMenuUtility.getOwner().sendMessage(target.getDisplayName() + " has been frozen.");
 
-                IcebergMenuManagerModule.getFrozenPlayers().add(target);
+            IcebergMenuManagerModule.getFrozenPlayers().add(target);
 
-                break;
-            case RED_BANNER:
-                MenuManager.openMenu(FreezeListMenu.class, playerMenuUtility.getOwner());
-                break;
-        }
-
+            break;
+        case RED_BANNER:
+            MenuManager.openMenu(FreezeListMenu.class, playerMenuUtility.getOwner());
+            break;
     }
+}
 ```
 
 I recommend also making an Enum to go along with your Menus that correspond to the data you will be storing in the PMC(PlayerMenuUtility), it will make it easier to remember and pass in the keys.
@@ -253,10 +251,14 @@ public enum PMUData {
 
 These enumerators can be passed into the PMC instead of a String key, they will be converted to a String internally.
 
-## Command Manager
+([Back to top](#table-of-contents))
+### Command Manager
+****
 *Video*: https://youtu.be/NFYg9Tmk-vo
 
-## Auto Register Bukkit Events
+([Back to top](#table-of-contents))
+### Auto Register Bukkit Events
+****
 Rather than registering each and every event handler in your plugin one by one, just annotate your Event Handler classes with `@RegisterEventHandler`:
 ```java
 @RegisterEventHandler   // Add this annotation on top of your event handler class
@@ -304,3 +306,5 @@ public final class MyPlugin extends JavaPlugin {
 }
 ```
 **Note:** This can be a bit performance intensive if your project has large number of classes.
+
+([Back to top](#table-of-contents))
