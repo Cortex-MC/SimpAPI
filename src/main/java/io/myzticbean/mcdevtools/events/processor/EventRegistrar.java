@@ -89,7 +89,7 @@ public class EventRegistrar {
                     try {
                         Class<?> clazz = Class.forName(className);
                         classes.add(clazz);
-                        plugin.getLogger().info("Found class: " + className);
+                        // plugin.getLogger().info("Found class: " + className);
                     } catch (ClassNotFoundException e) {
                         plugin.getLogger().warning("Failed to load class: " + className);
                     }

@@ -6,11 +6,9 @@
 
     <groupId>io.myzticbean</groupId>
     <artifactId>MCDevTools</artifactId>
-    <version>1.0.1-alpha</version>
+    <version>1.0.2-alpha</version>
     <packaging>jar</packaging>
-
     <name>MCDevTools</name>
-
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

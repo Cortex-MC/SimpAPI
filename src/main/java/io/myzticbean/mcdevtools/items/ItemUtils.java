@@ -62,6 +62,7 @@ public class ItemUtils {
         var itemStack = makeItem(material, displayName, lore);
         var itemMeta = Objects.requireNonNull(itemStack.getItemMeta());
         enchants.forEach((k, v) -> itemMeta.addEnchant(k, v, true));
+        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 

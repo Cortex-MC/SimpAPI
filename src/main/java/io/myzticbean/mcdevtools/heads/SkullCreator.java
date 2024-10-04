@@ -146,6 +146,10 @@ public class SkullCreator {
         );
     }
 
+    /**
+     * @param textureValue Texture value from https://mineskin.org/
+     * @return Player head
+     */
     public static ItemStack createPlayerHead(String textureValue) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta meta = (SkullMeta) head.getItemMeta();
@@ -155,7 +159,7 @@ public class SkullCreator {
             try {
                 String decodedValue = new String(Base64.getDecoder().decode(textureValue));
                 String textureUrl = extractTextureUrl(decodedValue);
-                URL url = new URL(textureUrl);
+                var url = new URL(textureUrl);
                 textures.setSkin(url);
             } catch (Exception e) {
                 Logger.error(e.getMessage(), e);
