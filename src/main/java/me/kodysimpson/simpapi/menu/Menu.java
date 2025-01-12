@@ -129,5 +129,14 @@ public abstract class Menu implements InventoryHolder {
         return item;
     }
 
+    /**
+     * Called when a player closes this menu
+     * Override this method to handle menu closing events
+     */
+    public void handleMenuClose() {
+        // Default empty implementation
+        // Subclasses can override this if they want to handle menu closing
+    }
+
 }
 

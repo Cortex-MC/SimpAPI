@@ -19,6 +19,9 @@ public abstract class PaginatedMenu extends Menu {
     //28 empty slots are remaining.
     protected int maxItemsPerPage = 28;
 
+    // Add cache field
+    private List<ItemStack> cachedItems;
+
     public PaginatedMenu(PlayerMenuUtility playerMenuUtility) {
         super(playerMenuUtility);
     }
@@ -39,10 +42,16 @@ public abstract class PaginatedMenu extends Menu {
      * Set the border and menu buttons for the menu. Override this method to provide a custom menu border or specify custom items in customMenuBorderItems()
      */
     protected void addMenuBorder() {
-
-        inventory.setItem(48, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Left"));
+        // First page button
+        inventory.setItem(47, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "First Page"));
+        // Previous page button
+        inventory.setItem(48, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Previous"));
+        // Close button
         inventory.setItem(49, makeItem(Material.BARRIER, ChatColor.DARK_RED + "Close"));
-        inventory.setItem(50, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Right"));
+        // Next page button
+        inventory.setItem(50, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Next"));
+        // Last page button
+        inventory.setItem(51, makeItem(Material.DARK_OAK_BUTTON, ChatColor.GREEN + "Last Page"));
 
         for (int i = 0; i < 10; i++) {
             if (inventory.getItem(i) == null) {
@@ -71,21 +80,42 @@ public abstract class PaginatedMenu extends Menu {
     }
 
     /**
+     * Gets the paginated items, using cache if available
+     * @return List of ItemStacks to display
+     */
+    protected List<ItemStack> getItems() {
+        if (cachedItems == null) {
+            cachedItems = dataToItems();
+        }
+        return cachedItems;
+    }
+
+    /**
+     * Clears the item cache, forcing items to be reloaded next time
+     */
+    protected void invalidateCache() {
+        cachedItems = null;
+    }
+
+    /**
      * Place each item in the paginated menu, automatically coded by default but override if you want custom functionality. Calls the loopCode() method you define for each item returned in the getData() method
      */
     @Override
     public void setMenuItems() {
-
         addMenuBorder();
-
-        //add the items to the inventory based on the current page and max items per page
-        List<ItemStack> items = dataToItems();
+        
+        List<ItemStack> items = getItems(); // Use cached items
+        
+        int slot = 10;
         for (int i = 0; i < maxItemsPerPage; i++) {
             int index = maxItemsPerPage * page + i;
             if (index >= items.size()) break;
-            inventory.addItem(items.get(index));
+            
+            if (slot % 9 == 8) slot += 2;
+            
+            inventory.setItem(slot, items.get(index));
+            slot++;
         }
-
     }
 
     /**
@@ -105,17 +135,68 @@ public abstract class PaginatedMenu extends Menu {
      * @return true if successful, false if already on the last page
      */
     public boolean nextPage() {
-        if (!((page + 1) * maxItemsPerPage >= dataToItems().size())) {
-            page = page + 1;
+        int totalItems = getItems().size(); // Use cached items
+        int lastPageNumber = (totalItems - 1) / maxItemsPerPage;
+        
+        if (page < lastPageNumber) {
+            page++;
             reloadItems();
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public int getMaxItemsPerPage() {
         return maxItemsPerPage;
+    }
+
+    public int getCurrentPage() {
+        return page + 1; // Convert to 1-based page numbers for display
+    }
+
+    public int getTotalPages() {
+        return ((getItems().size() - 1) / maxItemsPerPage) + 1; // Use cached items
+    }
+
+    @Override
+    public void open() {
+        invalidateCache(); // Force items to be reloaded when menu opens
+        super.open();
+    }
+
+    /**
+     * Refreshes the menu data and reloads items while keeping the menu open
+     */
+    public void refreshData() {
+        invalidateCache();
+        reloadItems();
+    }
+
+    /**
+     * Sets the current page to the first page (0)
+     * @return true if the page was changed, false if already on first page
+     */
+    public boolean firstPage() {
+        if (page == 0) {
+            return false;
+        }
+        page = 0;
+        reloadItems();
+        return true;
+    }
+
+    /**
+     * Sets the current page to the last page
+     * @return true if the page was changed, false if already on last page
+     */
+    public boolean lastPage() {
+        int lastPageNum = (getItems().size() - 1) / maxItemsPerPage;
+        if (page == lastPageNum) {
+            return false;
+        }
+        page = lastPageNum;
+        reloadItems();
+        return true;
     }
 }
 
