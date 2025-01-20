@@ -1,4 +1,4 @@
-# SimpAPI v4.4.0
+# SimpAPI v4.6.1
 
 ## Table Of Contents:
 ****
@@ -39,7 +39,7 @@ JavaDocs: https://kodysimpson.github.io/SimpAPI/index.html
 <dependency>
     <groupId>com.github.KodySimpson</groupId>
     <artifactId>SimpAPI</artifactId>
-    <version>4.3.2</version>
+    <version>4.6.1</version>
 </dependency>
 ```
 
@@ -65,7 +65,7 @@ repositories {
 Groovy/Kotlin:
 ```groovy
 dependencies {
-    implementation 'com.github.KodySimpson:SimpAPI:4.3.2'
+    implementation 'com.github.KodySimpson:SimpAPI:4.6.1'
 }
 ```
 
