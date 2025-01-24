@@ -17,6 +17,16 @@ import java.util.List;
  */
 public class CommandManager {
 
+    private static boolean isQualifiedSubcommand(Class<? extends SubCommand> clazz) {
+        return clazz.isAnnotationPresent(QualifiedSubCommand.class);
+    }
+
+    private static List<String> fetchAliasesForSubcommand(Class<? extends SubCommand> clazz) {
+        if(!isQualifiedSubcommand(clazz)) return Collections.emptyList();
+        QualifiedSubCommand marker = clazz.getAnnotation(QualifiedSubCommand.class);
+        return Arrays.asList(marker.aliases);
+    }
+
     /**
      * @param plugin             An instance of your plugin that is using this API. If called within plugin main class, provide this keyword
      * @param commandName        The name of the command
@@ -38,8 +48,22 @@ public class CommandManager {
         Arrays.stream(subcommands).map(subcommand -> {
             try {
                 Constructor<? extends SubCommand> constructor = subcommand.getConstructor();
-                return constructor.newInstance();
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                SubCommand sub = constructor.newInstance();
+
+                //Should this subcommand be treated as an independent command in its own right?
+                if(isQualifiedSubcommand(subcommand)) {
+                    createCoreCommand(
+                            plugin,
+                            sub.getName(),
+                            sub.getDescription(),
+                            sub.getSyntax(),
+                            commandList,
+                            fetchAliasesForSubcommand(subcommand)
+                    );
+                }
+
+                return sub;
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | NoSuchFieldException e) {
                 e.printStackTrace();
             }
             return null;
