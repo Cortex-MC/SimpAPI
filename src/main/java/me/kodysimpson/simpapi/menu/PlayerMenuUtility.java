@@ -7,23 +7,25 @@ Companion class to all menus. This is needed to pass information across the enti
  Each player has one of these objects, and only one.
  */
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Stack;
+import java.util.UUID;
 
 public class PlayerMenuUtility {
 
-    private final Player owner;
+    private final UUID owner;
     private final HashMap<String, Object> dataMap = new HashMap<>();
     private final Stack<Menu> history = new Stack<>();
 
     public PlayerMenuUtility(Player p) {
-        this.owner = p;
+        this.owner = p.getUniqueId();
     }
 
     public Player getOwner() {
-        return owner;
+        return Bukkit.getPlayer(owner);
     }
 
     /**
