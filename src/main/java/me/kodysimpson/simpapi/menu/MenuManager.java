@@ -10,6 +10,7 @@ import org.bukkit.plugin.RegisteredListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Used to interface with the Menu Manager API
@@ -17,7 +18,7 @@ import java.util.HashMap;
 public class MenuManager {
 
     //each player will be assigned their own PlayerMenuUtility object
-    private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
+    private static final HashMap<UUID, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
     private static boolean isSetup = false;
 
     private static void registerMenuListener(Server server, Plugin plugin) {
@@ -70,15 +71,15 @@ public class MenuManager {
         }
 
         PlayerMenuUtility playerMenuUtility;
-        if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a pmu "saved" for them
+        if (!(playerMenuUtilityMap.containsKey(p.getUniqueId()))) { //See if the player has a pmu "saved" for them
 
             //Construct PMU
             playerMenuUtility = new PlayerMenuUtility(p);
-            playerMenuUtilityMap.put(p, playerMenuUtility);
+            playerMenuUtilityMap.put(p.getUniqueId(), playerMenuUtility);
 
             return playerMenuUtility;
         } else {
-            return playerMenuUtilityMap.get(p); //Return the object by using the provided player
+            return playerMenuUtilityMap.get(p.getUniqueId()); //Return the object by using the provided player
         }
     }
 
